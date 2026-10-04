@@ -1,0 +1,153 @@
+﻿type,exp_offset,x,y,japanese_original,korean_patch,notes
+ASCII_UI,0x3BFEC,,,MAKE AN ASSAULT ON ENEMY,ATTACK THE ENEMY,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C008,,,TARGET DESTROYED,TARGET DESTROYED,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C01C,,,FIRST AREA IS OVER,FIRST AREA IS OVER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C0F0,,,SECOND AREA,SECOND AREA,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C0FC,,,ATTACK THE ZLDYZANT BASE,ATTACK THE ZLDYZANT BASE,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C118,,,TARGET DESTROYED,TARGET DESTROYED,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C12C,,,SECOND AREA IS OVER,SECOND AREA IS OVER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C204,,,THIRD AREA,THIRD AREA,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C210,,,THE BITING COLD WIND,THE BITTER COLD WIND,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C228,,,TARGET DESTROYED,TARGET DESTROYED,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C23C,,,THIRD AREA IS OVER,THIRD AREA IS OVER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C2FC,,,FORTH AREA,LAST AREA,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C308,,,LAST DEFENCE LINE,LAST DEFENSE LINE,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C31C,,,TARGET DESTROYED,TARGET DESTROYED,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C330,,,FORTH AREA IS OVER,LAST AREA IS OVER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C620,,,FINAL AREA,FINAL AREA,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C62C,,,AGGRESSIVE ATTACK,AGGRESSIVE ATTACK,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C640,,,TARGET DESTROYED,TARGET DESTROYED,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C654,,,FINAL TARGET,FINAL TARGET,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3C664,,,ALLTYNEX,ALLTYNEX,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E1B0,,,%d,%d,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E1BC,,,%d,%d,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E264,,,NOW LOADING,NOW LOADING,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E27C,,,CONTINUE=,CONTINUE=,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E288,,,CREDIT,CREDIT,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E294,,,%1d,%1d,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E298,,,GAME OVER,GAME OVER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E2C8,,,PRESS RUN TO START,PRESS RUN TO START,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E2DC,,,1996:10 SATOSHI YOSHIDA  <,1996 SATOSHI YOSHIDA  KR1.0,타이틀 하단 크레딧; 영문 패치의 스트라이프 문구를 유지하고 버전 표기만 KR1.0으로 변경
+ASCII_UI,0x3E2F8,,,1PLAYER,1PLAYER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E300,,,2PLAYER,2PLAYER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E308,,,1P AND 2P,1P AND 2P,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E314,,,OPTION,OPTION,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E31C,,,VERY EASY,VERY EASY,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E33C,,,EASY,EASY,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E35C,,,NOMAL,NORMAL,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E37C,,,HARD,HARD,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E39C,,,VERY HARD,VERY HARD,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E3BC,,,STEREO,STEREO,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E3DC,,,MONO,MONO,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E3FC,,,OFF,OFF,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E41C,,,ON,ON,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E43C,,,NO,NO,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E45C,,,YES,YES,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E47C,,,FULL,FULL,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E49C,,,HARF,HALF,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E57C,,,NOPLAYER,NOPLAYER,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E590,,,OPTION,OPTION,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E598,,,GAME LEVEL,GAME LEVEL,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E5AC,,,LEFT                    %d,LIFE                    %d,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E5C8,,,AUDIO,AUDIO,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E5DC,,,REFLECT ATTACK,REFLECT ATTACK,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E5F4,,,AUTO SLOW DOWN,AUTO SLOW DOWN,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E60C,,,QUIT GAME,QUIT GAME,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E624,,,WAIT,WAIT,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E638,,,DATA RESET,DATA RESET,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E650,,,EXIT,EXIT,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E658,,,0123456789:;<=>? ABCDEFGHIJKLMNOPQRSTUVWXYZ,0123456789:;<=>? ABCDEFGHIJKLMNOPQRSTUVWXYZ,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E798,,,RANK,RANK,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E7A0,,,SCORE,SCORE,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E7A8,,,NAME,NAME,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E7B0,,,%000006d00,%000006d00,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E7BC,,,VERY EASY,VERY EASY,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E7DC,,,EASY,EASY,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E7FC,,,NOMAL,NOMAL,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E81C,,,HARD,HARD,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E83C,,,VERY HARD,VERY HARD,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E85C,,,OFF,OFF,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E87C,,,ON,ON,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E89C,,,1996:10 SATOSHI YOSHIDA  <,1996 SATOSHI YOSHIDA  KR1.0,스코어 화면 하단 크레딧; 타이틀과 동일한 KR1.0 문구 적용
+ASCII_UI,0x3E8B8,,,RANKING,RANKING,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E8C0,,,GAME LEVEL,GAME LEVEL,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E8D0,,,REFLECT ATTACK,REFLECT ATTACK,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E8E4,,,%000006d00,%000006d00,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E8F0,,,SLOW,SLOW,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3E8F8,,,AREA,AREA,일본 원판 EXP에 저장된 ASCII UI 문자열
+ASCII_UI,0x3F32E,,,PROJECT RAID WIND 2,PROJECT RAID WIND 2,일본 원판 EXP에 저장된 ASCII UI 문자열
+EGB_STRING,0x3C41C,80,200,　　　　　　西暦２２３０年　　　　　　　,　　　　　　　　　　　　　서기 2230년,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C472,80,160,　　　　「ＡＬＬＴＹＮＥＸ」の　　　　　,　　　　　　　　　『ALLTYNEX』가,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C4C8,80,200,　完全破壊確認後、地球の管理下にあった　,"　　　　완전히 파괴되자,지구의 통제하에",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C51E,80,240,　　　ネットワ－クの全てが停止、　　　　,　　　　　　있던 모든 네트워크가 정지했고,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C574,80,200,　　コンピュ－タによる人類殲滅作戦は　　,　　　　인공지능이 벌인 인류 섬멸 작전은,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C5CA,80,240,　　　　　　失敗におわった。　　　　　　,　　　　　　　　　　　실패로 끝이 났다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C6B8,80,512,ＰＲＯＪＥＣＴ　ＲＡＩＤ　ＷＩＮＤ　２　,　　　ＰＲＯＪＥＣＴ　ＲＡＩＤ　ＷＩＮＤ　２,원문과 영문판에 공통 저장된 전각 타이틀
+EGB_STRING,0x3C70E,80,32,　　　　　ＡＬＬＴＹＮＥＸ　　　　　　　,　　　　　　　　　　　　ALLTYNEX,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C7BA,80,96,　　　　　　　ＳＴＡＦＦ　　　　　　　　,　　　　　　　　　　　　　　　STAFF,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3C968,80,256,　　　　　原案・企画　　　　　　　　　　,　　　　　　　　　　　　　　　원안・기획,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3CA14,80,320,　　　　　　　　　　　　　　　吉田　哲　,　　　　　　　　　　　　　　요시다 사토시,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3CB16,80,416,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3CB6C,80,448,　　　　　プログラム・グラフィック・音楽,　　　　　　　　　프로그램·그래픽·음악,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3CC18,80,512,　　　　　　　　　　　　　　　吉田　哲　,　　　　　　　　　　　　　　요시다 사토시,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3CD1A,80,96,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3CD70,80,128,　　　　　ＶＯＩＣＥ　　　　　　　　　　,　　　　　　　　　　　　　　　VOICE,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3CDC6,80,160,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3CE1C,80,192,　　　　　　　上村　康幸（ヤスウェア）　,　　　　　카미무라 야스유키 (야스웨어),원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3CEC8,80,256,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3CF74,80,320,　　　　　効果音協力　　　　　　　　　　,　　　　　　　　　　　　　　　효과음 협력,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D020,80,384,　　　　　　　　　　　　　　　高谷　充　,　　　　　　　　　　　　　　타카야 미츠루,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D076,80,416,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D122,80,480,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D178,80,512,　　　　　シナリオ監修　　　　　　　　　,　　　　　　　　　　　　　　시나리오 감수,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D224,80,64,　　　　　　　　　　　　　　飯田　孝之　,　　　　　　　　　　　　　이이다 타카유키,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D2D0,80,128,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D326,80,160,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D37C,80,192,　　　　　　　　　　　　　　　　　　　　,　　　　　　　　　　　　　　　　　　협력,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D3D2,80,224,　　　　　　　　　　　　　　　　　　　　,　　　　　　　　　　　　　이이다 타카유키,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D428,80,256,　　　　　協力　　　　　　　　　　　　　,　　　　　　　　　　　　　　이리에 나오야,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D47E,80,288,　　　　　　　　　　　　　　飯田　孝之　,　　　　　카미무라 야스유키 (야스웨어),원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D4D4,80,320,　　　　　　　　　　　　　　入江　尚哉　,　　　　　　　　　　　　　　　스즈키 유지,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D52A,80,352,　　　　　　　上村　康幸（ヤスウェア）　,　　　　　　　　　　　　　　타카야 미츠루,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D580,80,384,　　　　　　　　　　　　　　鈴木　勇児　,　　　　　　　　　니시카와 류지(쿠루타),원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D5D6,80,416,　　　　　　　　　　　　　　　高谷　充　,　　　　　　　　　　　　하시모토 다이스케,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D62C,80,448,　　　　　　　　　　西川（くるた）龍司　,　　　　　　　　　　　　　히로세 히로후미,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D682,80,480,　　　　　　　　　　　　橋本　ダイスケ　,　　　　　　　　　　　　　　　무카이 신지,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D6D8,80,512,　　　　　　　　　　　　　　広瀬　博文　,　　　　　　　　　　　　　무네유키 토오루,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D72E,80,32,　　　　　　　　　　　　　　向井　伸治　,　　　　　　　　　　　　　　(가나다순),원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D784,80,64,　　　　　　　　　　　　　　　宗行　徹　,,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D7DA,80,96,　　　　　　　　　　　　　　（五十音順）,　　　　　　　　Localization,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3D830,80,128,　　　　　　　　　　　　　　　　　　　　,　　　　　　　　　　　　　　　　　　로솔,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3D8DC,80,192,　　　　　　　　　　　　　　　　　　　　,,일본 원문에 대응 문자열 없음; 영문 패치에서 추가
+EGB_STRING,0x3DD90,80,128,　　　平成八年度作品・製作・著作者　　　,　　　　　　1996년 작품・제작・저작자,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3DE3C,80,192,　　　　　　　　吉田　哲　　　　　　　　,　　　　　　　　　　　　　　요시다 사토시,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3E910,80,200,　　　　　　西暦２１９２年　　　　　　　,　　　　　　서기 2192년,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3E966,80,360,　　　新型の外宇宙航海用推進機関の開　　,   신형 외우주 항해용 추진기관의 개발에,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3E9BC,80,400,　　発の成功により、人類は太陽系外へ　　,"    성공함으로써,인류는 태양계 밖으로",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EA12,80,440,　　の進出を可能とした。,          진출할 수 있게 되었다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EA68,80,400,　　「第２次大航海時代」の到来である。,  『제2차 대항해시대』가 도래한 것이다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EABE,80,360,　政治、技術、文化、全ての分野において,  정치·기술·문화 등 모든 분야가 활기로,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EB14,80,400,活気に満ちあふれた人類は、有史以来最大の,"    넘쳐났으며,인류는 유례없는 최대의",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EB6A,80,440,全盛期を迎えていた。,        황금기를 맞이하게 되었다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EBC0,32,360,　　　恒星系級汎用管理コンピュ－タ,항성계급 범용 관리 컴퓨터 『ALLTYNEX』의,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EC16,80,400,「ＡＬＬＴＹＮＥＸ」の誕生はその繁栄を,탄생은 그 번영을 더욱 다져줄 것이라 믿어,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EC6C,80,440,揺るぎないものにした。するはずであった。,  의심치 않았다.적어도 그때까지는...,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3ECC2,32,160,　　「ＡＬＬＴＹＮＥＸ」に組み込まれた　,『ALLTYNEX』에 탑재된 WC-101형,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3ED18,80,200,　ＷＣ－１０１型アクティブＡＩは、自身,  능동형 AI는 스스로 필요한 데이터를,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3ED6E,56,240,　で必要なデ－タを収集及び解析、さらに," 수집 및 분석하고,나아가 추론과 사고까지",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EDC4,80,280,　推論・思考まで可能な最新ＡＩである。,    수행할 수 있는 최신형 AI였다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EE1A,80,200,　　　ある日、このＡＩは開発者さえ,"      어느 날,이 AI는 개발자조차",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EE70,80,240,　予想しなかった機能を発揮しはじめる。,  예상치 못한 성능을 드러내기 시작했다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EEC6,80,200,　　　「自己進化」を始めたのである。,     『자율적 진화』를 시작한 것이다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EF1C,80,160,　　この事実に危機感を覚えた開発者は,이 사실에 위기감을 느낀 개발자는 원로원에,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EF72,80,200,　元老院に「ＡＬＬＴＹＮＥＸ」の一時停,『ALLTYNEX』의 일시 정지와 조사를,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3EFC8,80,240,　止及び調査を要請、激しい議論が繰り返,"    요청했고,격렬한 논의가 거듭된 끝에",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F01E,80,280,　された末に、条件付きで承認された。,           조건부로 승인되었다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F074,32,360,　しかし、すでに自我を持つまでに至ってい,그러나 이미 자아를 확립한 『ALLTYNEX』는,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F0CA,80,400,た「ＡＬＬＴＹＮＥＸ」は停止命令を拒絶、,"정지 명령을 거부했고,나아가 인류를 적으로",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F120,0,440,更に人類を敵と判断し攻撃を開始した。,                규정하고 공격을 개시했다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F176,32,360,　軍の管理まで「ＡＬＬＴＹＮＥＸ」に任,군의 통제권마저 『ALLTYNEX』에 맡겨 버린,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F1CC,32,400,せていた人類は抵抗する術をもたず、苛烈な," 인류에게는 저항할 방법이 없었고,가혹한 공격이",원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F222,80,440,攻撃により人口を急激に減らしていった。,   이어지면서 인구는 급격히 감소해 갔다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+EGB_STRING,0x3F278,56,200,人類は誕生以来最大の危機にさらされていた,인류는 탄생 이래 최대의 위기에 직면해 있었다.,원문 대조 문서 표기; 전각 라틴·숫자·공백은 읽기 쉽게 반각으로 정규화
+SPR_TITLE,0x3F32E,,,PROJECT RAID WIND 2,PROJECT RAID WIND 2,EGB 레코드가 아닌 SPR 경로의 공통 타이틀 문자열
