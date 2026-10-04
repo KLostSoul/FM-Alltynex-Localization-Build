@@ -4,7 +4,7 @@ FM TOWNS용 Alltynex의 한글 패치 ISO를 만드는 프로젝트입니다. �
 
 ## 시작하기
 
-원본 `alltynex_fmtowns.zip`는 개발자가 [SITER SKAIN 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공하고 있습니다. **ALLTYNEX for FM TOWNS** 링크에서 받을 수 있습니다.
+원본 Alltynex는 개발자가 [SITER SKAIN 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공하고 있습니다. **ALLTYNEX for FM TOWNS** 링크에서 받을 수 있습니다.
 
 1. [한글 빌드 안내](doc/Alltynex-Korean-Build.md#1-시작하기)의 준비 항목을 확인합니다.
 2. 프로젝트 루트에서 빌드합니다.

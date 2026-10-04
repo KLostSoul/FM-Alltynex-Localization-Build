@@ -13,7 +13,7 @@ FreeTOWNSOS의 상위 고지는 [FreeTOWNSOS-LICENSE.md](../../licenses/FreeTOWN
 
 ## 원본 게임 준비
 
-`alltynex_fmtowns.zip`는 개발자가 [SITER SKAIN 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공한다. **ALLTYNEX for FM TOWNS** 링크로 받은 파일을 이 폴더에 그대로 둔다. 압축을 풀거나 다시 압축할 필요가 없다.
+원본 Alltynex는 개발자가 [SITER SKAIN 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공한다. **ALLTYNEX for FM TOWNS** 링크로 받은 파일을 이 폴더에 그대로 둔다. 압축을 풀거나 다시 압축할 필요가 없다.
 
 빌드는 다음 입력 파일의 SHA-256을 확인한다. 다른 버전이나 수정된 파일이면 오류로 중단한다.
 
