@@ -17,7 +17,7 @@
 
 원본 Alltynex는 개발자가 [SITER SKAIN의 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공한다. **ALLTYNEX for FM TOWNS** 링크로 받은 뒤 `Import/Img`에 둔다.
 
-Python 3를 설치하고 프로젝트 루트에서 작업한다.
+현재 빌드는 Python 3.14로 빌드했다. 프로젝트 루트에서 작업한다.
 
 | 위치 | 준비할 자료 |
 | --- | --- |
@@ -43,11 +43,13 @@ Windows x64에서는 `tools/xdelta3.exe`에 포함된 [공식 xdelta3](https://g
 
 ### 배포된 xdelta 적용
 
-원본 ZIP과 xdelta, xdelta3만 준비하면 된다. ZIP을 압축 해제하지 않고 다음 명령으로 ISO를 만든다.
+원본 ZIP과 xdelta, xdelta3만 준비하면 된다. Windows x64에서는 포함된 `tools/xdelta3.exe`를 원본 ZIP·xdelta와 같은 폴더에 복사하고, 그 폴더에서 다음 명령으로 ISO를 만든다. ZIP은 압축 해제하지 않는다.
 
 ```powershell
-xdelta3 -d -D -R -s alltynex_fmtowns.zip "Alltynex (Kor v1.0).xdelta" "Alltynex (Kor v1.0).iso"
+.\xdelta3.exe -d -D -R -s alltynex_fmtowns.zip "Alltynex (Kor v1.0).xdelta" "Alltynex (Kor v1.0).iso"
 ```
+
+PATH에 설치된 xdelta3를 사용할 때는 명령의 `.\xdelta3.exe`를 `xdelta3`로 바꾼다.
 
 기준 ZIP의 SHA-256은 `19b662f038e50e99535f60dbe6e07a77e269f574ed9250d46fc0655bb2aa6b3a`다. 적용 사용자에게는 Python·CSV·폰트·FreeTOWNSOS 입력 ISO가 필요하지 않다. 직접 번역을 편집해 빌드할 때는 위 준비 자료가 모두 필요하다.
 

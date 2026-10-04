@@ -19,11 +19,13 @@ Windows x64에서는 `tools/xdelta3.exe`에 포함된 [공식 xdelta3](https://g
 
 ## xdelta로 ISO 생성하기
 
-원본 ZIP과 배포된 xdelta를 같은 폴더에 두고 xdelta3로 적용합니다. ZIP을 압축 해제할 필요가 없습니다.
+Windows x64에서는 포함된 `tools/xdelta3.exe`를 원본 ZIP·배포된 xdelta와 같은 폴더에 복사하고, 그 폴더에서 다음 명령을 실행합니다. ZIP은 압축 해제하지 않습니다.
 
 ```powershell
-xdelta3 -d -D -R -s alltynex_fmtowns.zip "Alltynex (Kor v1.0).xdelta" "Alltynex (Kor v1.0).iso"
+.\xdelta3.exe -d -D -R -s alltynex_fmtowns.zip "Alltynex (Kor v1.0).xdelta" "Alltynex (Kor v1.0).iso"
 ```
+
+PATH에 설치된 xdelta3를 사용할 때는 명령의 `.\xdelta3.exe`를 `xdelta3`로 바꿉니다.
 
 기준 ZIP의 SHA-256은 `19b662f038e50e99535f60dbe6e07a77e269f574ed9250d46fc0655bb2aa6b3a`입니다. 이 방법으로 적용할 때는 Python, 번역 CSV, 폰트, FreeTOWNSOS 입력 ISO를 따로 준비할 필요가 없습니다.
 
