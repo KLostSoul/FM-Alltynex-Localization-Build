@@ -28,23 +28,23 @@ FreeTOWNSOS 참조 소스는 commit `b72f4066b20b08d78fbfaf876e4f629c77cbb56f`, 
 
 ### `ALLTYNEX.EXE` 설치 컨테이너와 실행용 EXP는 별개
 
-FreeTOWNSOS 이미지의 `ALLTYNEX.EXE`는 바깥쪽이 MZ 실행 파일이고, 파일 오프셋 `0x664`부터 96개의 `-lh5-` LHA 항목이 이어진다. 각 항목 헤더의 이름, 원본 길이, LHA CRC-16을 일본 원판 자료의 같은 이름 파일과 대조했을 때 96개 모두 일치했다. 특히 컨테이너 안에도 일본 원판 `ALLTYNEX.EXP` 항목이 들어 있다. 즉 EXE 안의 설치 자료는 일본 원판 ZIP 계보이며, 별도 파일인 `/ALLTYNEX/ALLTYNEX.EXP`가 공개 영문 패치본이다. FreeTOWNSOS 실행 배치는 후자를 `FREE386`으로 시작한다. 설치 컨테이너 내부의 EXP와 ISO 디렉터리에서 실행하는 EXP를 같은 파일로 취급하면 안 된다.
+초기 FreeTOWNSOS 이미지의 `ALLTYNEX.EXE`는 바깥쪽이 MZ 실행 파일이고, 파일 오프셋 `0x664`부터 96개의 `-lh5-` LHA 항목이 이어진다. 각 항목 헤더의 이름, 원본 길이, LHA CRC-16을 일본 원판 자료의 같은 이름 파일과 대조했을 때 96개 모두 일치했다. 특히 컨테이너 안에도 일본 원판 `ALLTYNEX.EXP` 항목이 들어 있다. 즉 EXE 안의 설치 자료는 일본 원판 ZIP 계보이며, 별도 파일인 `/ALLTYNEX/ALLTYNEX.EXP`가 공개 영문 패치본이다. 초기 FreeTOWNSOS 실행 배치는 후자를 `FREE386`으로 시작한다. 설치 컨테이너 내부의 EXP와 ISO 디렉터리에서 실행하는 EXP를 같은 파일로 취급하면 안 된다.
 
 이 대조는 LHA 헤더 CRC와 길이에 기반한다. LHA 페이로드를 전부 풀어 바이트 단위 SHA 해시를 대조한 것은 아니다. 이름·크기·CRC 검증은 컨테이너 안에 일본 원판의 동일한 96개 릴리스 파일이 수록됐다는 것을 강하게 뒷받침한다.
 
 ### 세 입력의 정확한 계보와 ISO 파일 계층
 
-여기서 “원판”은 일본어 게임 자료 96개를 뜻한다. 영문 패치본은 그 자료의 문자열을 바꾼 판본이고, 초기 FreeTOWNSOS 변환본은 영문 패치본의 게임 자료를 유지한 채 부팅 환경을 바꾼 결과다.
+여기서 “원판”은 일본어 게임 자료 96개를 뜻한다. 영문 패치본은 그 자료의 문자열을 바꾼 판본이다. 초기 FreeTOWNSOS 변환본은 영문 패치본을 사용했지만, 현재 한글 빌드는 일본어 ZIP과 FreeTOWNSOS 부팅 ISO를 입력으로 사용한다.
 
 | 입력 | ISO/ZIP에서 직접 센 일반 파일 | 배치 |
 |---|---:|---|
 | 일본어 원판 ZIP | 96 | `alltynex_fmtowns/` 디렉터리 |
 | 영문 패치 ISO | 130 | 루트 103개와 하위 5개 디렉터리 27개 (`HCOPY` 5, `SYS` 4, `SYSINIT` 5, `TBIOS` 10, `T_TOOL` 3) |
-| FreeTOWNSOS ISO9660-fixed | 145 | 루트 17개, `/ALLTYNEX` 98개, `/TESTS` 30개 |
+| 현재 한글 FreeTOWNSOS ISO | 144 | 루트 17개, `/ALLTYNEX` 97개, `/TESTS` 30개 |
 
 일본어 ZIP의 파일명 96개가 영문 ISO 루트에도 전부 있다. 그 96개를 내용 대조하면 95개는 바이트 단위로 동일하고, 유일한 차이는 같은 크기(267,304 bytes)의 `ALLTYNEX.EXP`다. 일본판 EXP MD5는 `2FBAD7774E13CDD6B662BD7A3C814EAA`, 영문 패치 EXP MD5는 `B192EA9EE7EE2912B95877312602208A`다. 영문 ISO 루트에서 ZIP과 이름이 겹치지 않는 파일은 `ALLTYNEX.EXE`, `AUTOEXEC.BAT`, `CFGDAT.SAV`, `CONFIG.SYS`, `IO.SYS`, `RUN386.EXE`, `TOWNS.SYS` 일곱 개다.
 
-FreeTOWNSOS 변환본의 `/ALLTYNEX` 98개는 영문 ISO 루트의 98개 파일과 모두 내용이 같다. 변환 때 기존 영문 ISO에서 빠진 것은 `AUTOEXEC.BAT`, `CONFIG.SYS`, `IO.SYS`, `RUN386.EXE`, `TOWNS.SYS` 다섯 파일이고, 그 자리는 FreeTOWNSOS 부팅 파일로 대체됐다. `ALLTYNEX.EXE`와 `CFGDAT.SAV`는 게임 디렉터리에 남아 있으며 양쪽 MD5도 각각 `996AA4F71DDAD7684321B093C820EB33`, `21E852BD20B9563115138D847D7CCF39`로 동일하다. `/ALLTYNEX/ALLTYNEX.EXP` 역시 영문 패치 기준본과 크기·MD5가 같다. 즉 FreeTOWNSOS 이미지의 게임 파일은 일본 원판 ZIP에서 새로 복사한 것이 아니라, 사용자가 지적한 대로 영문 패치 ISO를 변환한 결과다.
+초기 FreeTOWNSOS 변환본은 영문 ISO의 게임 파일을 유지했다. 현재 한글 빌드는 일본어 ZIP의 96개 파일에서 EXP를 한글 패치본으로 교체하고 `HANME.FNT`를 추가해 `/ALLTYNEX`에 97개 파일을 배치한다. `ALLTYNEX.EXE`와 `CFGDAT.SAV`는 현재 빌드에 복사하지 않는다.
 
 ### 실행 이미지 대조 결과
 
@@ -62,11 +62,11 @@ FreeTOWNSOS 변환본의 `/ALLTYNEX` 98개는 영문 ISO 루트의 98개 파일�
 FreeTOWNSOS용 ISO의 실제 배치와 부팅 스크립트에서 확인한 흐름:
 
 1. CONFIG.SYS가 REPLACE.SYS, MINVCPI.SYS, FAKENSDD.SYS, TGBIOS.SYS와 RAMDRIVE.SYS를 적재한다. REPLACE.SYS의 매핑은 RUN386.EXE를 R:\FREE386.COM으로 대체한다.
-2. AUTOEXEC.BAT가 TGDRV로 CD 드라이브를 설정하고 FREE386.COM을 RAM 드라이브 R:에 복사한다. 이어 PATH, SYSXXXX0를 설정하고 ORICON YAMAND.COM /E:40 /K FORCE31K.COM을 실행한다. ORICON이 새 YAMAND 명령 인터프리터를 띄우므로 그 뒤의 배치 줄은 이어서 실행되지 않는다.
-3. 사용자가 확인한 Q:\> 셸에서 RUNALL.BAT을 실행하면 CD \ALLTYNEX 다음 RUN386.EXE -nocrt ALLTYNEX를 호출한다. 이 ISO에서 게임 실행 명령은 ALLTYNEX.EXE가 아니라 ALLTYNEX.EXP를 Free386로 실행한다.
+2. AUTOEXEC.BAT가 TGDRV로 CD 드라이브를 설정하고 FREE386.COM을 RAM 드라이브 R:에 복사한다. 이어 PATH, SYSXXXX0를 설정하고 ORICON YAMAND.COM /E:40 /K KRSTART.BAT을 실행한다. ORICON이 새 YAMAND 명령 인터프리터를 띄우므로 그 뒤의 배치 줄은 이어서 실행되지 않는다.
+3. `AUTOEXEC.BAT`가 `/K KRSTART.BAT`을 실행한다. `KRSTART.BAT`은 `CD \ALLTYNEX` 다음 `RUN386.EXE -nocrt ALLTYNEX`를 호출하며, Free386가 `/ALLTYNEX/ALLTYNEX.EXP`를 실행한다.
 4. ALLTYNEX.EXP가 실행된 뒤 게임 공용 파일 로더가 PAT/DAT/EUP 등 자료를 읽고, 게임은 장면별 EGB 또는 SPR 렌더 경로를 사용한다.
 
-영문 패치 ISO는 게임 파일이 ISO 루트에 놓인 반면, 그 ISO를 바탕으로 만든 FreeTOWNSOS 변환본은 루트에 운영체제 파일과 RUNALL.BAT이 있고 게임 자료를 /ALLTYNEX 아래에 둔다. ALLTYNEX.EXE도 보존되어 있지만 변환본의 배치 파일은 ALLTYNEX.EXP를 지정한다. ALLTYNEX.EXE 내부 동작을 완전히 역공학한 것은 아니므로 세부 책임은 단정하지 않는다.
+현재 한글 FreeTOWNSOS ISO는 루트에 운영체제 파일과 `KRSTART.BAT`을 두고 게임 자료를 `/ALLTYNEX` 아래에 둔다. `KRSTART.BAT`은 `ALLTYNEX.EXP`를 지정하며, `ALLTYNEX.EXE`와 `CFGDAT.SAV`는 포함하지 않는다.
 
 ### FreeTOWNSOS ISO의 ISO9660 주의점
 
@@ -74,7 +74,7 @@ FreeTOWNSOS용 ISO의 실제 배치와 부팅 스크립트에서 확인한 흐�
 
 ## 게임 파일과 실행 이미지
 
-일본 원판 ZIP과 영문 패치 ISO에는 대응되는 게임 파일 96개가 있다. FreeTOWNSOS용 ISO의 /ALLTYNEX에는 영문 패치본에서 가져온 ALLTYNEX.EXE 598,678 bytes, ALLTYNEX.EXP 267,304 bytes와 게임 리소스가 들어 있다.
+일본 원판 ZIP과 영문 패치 ISO에는 대응되는 게임 파일 96개가 있다. 현재 FreeTOWNSOS용 ISO의 `/ALLTYNEX`에는 일본어 ZIP의 95개 공통 파일, 한글 패치된 `ALLTYNEX.EXP`, `HANME.FNT`가 들어 있다.
 
 ### ALLTYNEX.EXP의 P3 구조
 
