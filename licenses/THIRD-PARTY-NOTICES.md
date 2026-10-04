@@ -59,6 +59,6 @@ xdelta 생성은 [jmacd/xdelta](https://github.com/jmacd/xdelta)의 외부 실�
 
 ## 원본 게임 자료와 문자열
 
-원본 `alltynex_fmtowns.zip`는 개발자가 [SITER SKAIN의 과거 작품 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 배포하고 있다. 해당 페이지의 **ALLTYNEX for FM TOWNS** 링크로 받을 수 있다.
+원본 Alltynex는 개발자가 [SITER SKAIN의 과거 작품 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 배포하고 있다. 해당 페이지의 **ALLTYNEX for FM TOWNS** 링크로 받을 수 있다.
 
 게임 실행 이미지, 그래픽·맵·음악 자료, 일본 원문과 영문 패치 원문은 프로젝트 자체 코드 라이선스의 적용 대상이 아니다. 번역 CSV나 분석 문서에 원문이 포함되어 있어도 원본 자료의 권리는 해당 권리자에게 남는다.

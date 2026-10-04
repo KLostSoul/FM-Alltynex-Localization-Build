@@ -15,7 +15,7 @@
 
 ### 준비
 
-원본 `alltynex_fmtowns.zip`는 개발자가 [SITER SKAIN의 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공한다. **ALLTYNEX for FM TOWNS** 링크로 받은 뒤 `Import/Img`에 둔다.
+원본 Alltynex는 개발자가 [SITER SKAIN의 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공한다. **ALLTYNEX for FM TOWNS** 링크로 받은 뒤 `Import/Img`에 둔다.
 
 Python 3를 설치하고 프로젝트 루트에서 작업한다.
 
@@ -23,7 +23,8 @@ Python 3를 설치하고 프로젝트 루트에서 작업한다.
 | --- | --- |
 | Import/Img | 원본 게임 자료와 FreeTOWNSOS 부팅 입력 |
 | Import/Strings | 번역 CSV와 한글 조합 토큰표 |
-| font | HANME 자모 폰트와 폰트 라이선스 |
+| font | HANME 자모 폰트 |
+| licenses | 폰트·프로젝트·외부 자료 라이선스 |
 | Output | 빌드가 생성하는 ISO와 xdelta |
 
 입력 자료의 일치 여부는 빌더가 검사한다. 필요한 자료가 없거나 지원하는 자료와 다르면 로그에 표시된 입력 오류를 먼저 해결한다.
@@ -256,7 +257,7 @@ NOW@LOADING은 시작 슬롯 0x3BA, 좌표·이동폭 6비트 고정소수점으
 | 엔딩 | 원본 ESP·사본 제거 수정본에서 정상 진행 |
 | 잔존 N | 최신 ISO에서 더 이상 표시되지 않음 |
 
-엔딩 통과 단계 ISO SHA-256은 `8571d9fda6f24b644d3158a2c45468bda449e4a38548c21509b8657e06604831`이다. 이후 가운데 정렬·N 초기화를 반영한 최신 해시는 2절의 값이다. 두 단계의 보고를 최신 ISO 전체 통과로 합쳐 기록하지 않는다. 스탭롤·엔딩 가운데 정렬 전체 행의 별도 화면 확인 보고는 아직 없다. 최신 배포 ISO 전체를 원본 TownsOS에서 통과했다고도 확대하지 않는다.
+엔딩 통과 단계 ISO SHA-256은 `8571d9fda6f24b644d3158a2c45468bda449e4a38548c21509b8657e06604831`이다. 이후 가운데 정렬·N 초기화를 반영한 최신 해시는 부록의 값이다. 두 단계의 보고를 최신 ISO 전체 통과로 합쳐 기록하지 않는다. 스탭롤·엔딩 가운데 정렬 전체 행의 별도 화면 확인 보고는 아직 없다. 최신 배포 ISO 전체를 원본 TownsOS에서 통과했다고도 확대하지 않는다.
 
 ### 현재 빌드가 수행하는 검사
 

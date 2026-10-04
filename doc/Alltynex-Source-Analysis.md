@@ -39,7 +39,7 @@ FreeTOWNSOS 이미지의 `ALLTYNEX.EXE`는 바깥쪽이 MZ 실행 파일이고, 
 
 | 입력 | ISO/ZIP에서 직접 센 일반 파일 | 배치 |
 |---|---:|---|
-| 일본어 원판 ZIP | 96 | ZIP 루트 한 곳 |
+| 일본어 원판 ZIP | 96 | `alltynex_fmtowns/` 디렉터리 |
 | 영문 패치 ISO | 130 | 루트 103개와 하위 5개 디렉터리 27개 (`HCOPY` 5, `SYS` 4, `SYSINIT` 5, `TBIOS` 10, `T_TOOL` 3) |
 | FreeTOWNSOS ISO9660-fixed | 145 | 루트 17개, `/ALLTYNEX` 98개, `/TESTS` 30개 |
 
@@ -54,7 +54,7 @@ FreeTOWNSOS 변환본의 `/ALLTYNEX` 98개는 영문 ISO 루트의 98개 파일�
 | 그래픽 파일 | 크기 | 영문·FreeTOWNSOS 공통 SHA-256 |
 |---|---:|---|
 | `ALLTY_1.PAT` | 32,768 bytes | `6EABD45FBC6F8792F759B42D914BCA4F05F751E198CDED4852BDCDD38EDE6E86` |
-| `ALLTY_2.PAT` | 32,768 bytes | `BE843F69FA681B62536A97B91307B0C18C19218EAD8889A4308CA6779B9EFE9` |
+| `ALLTY_2.PAT` | 32,768 bytes | `BE843F69FA681B62536A97B91307B0C18C19218EAD88849A4308CA6779B9EFE9` |
 | `ALLTY_P.PAT` | 32,768 bytes | `698CCADF86FF3B6457527F0D7CF9796D7A8DF3ACA51FE69114F7E352A981B0A8` |
 
 
@@ -108,7 +108,7 @@ ALLTYNEX.EXP는 단순한 평면 코드 덩어리가 아니라 P3 형식 헤더 
 
 ### EUP 파일 적재와 게임 내부 재생 디스패처
 
-초기화와 스테이지 자료표에서 보이는 `0x33514(filename, slot)`은 EUP 전용 적재 함수다. 슬롯 배열은 `0x926F4 + slot × 0x1E4`의 484-byte 레코드다. 함수는 `"rb"`로 파일을 열고 크기를 구해 `0x806` 이하 파일을 거부한다. 음악 파일의 처음 8 bytes에는 `NAME ENTRY`, `MAKE AN ASSAULT ON ENEMY` 같은 트랙명이 실제로 저장돼 있다. 적재 함수는 헤더 여러 위치에서 제어 자료를 슬롯의 `+0x1A4`와 `+0x1C4` 배열로 복사하고, 파일의 `0x806` 오프셋 이후 길이(파일 크기 − `0x806`)만큼 동적 버퍼를 할당해 읽는다. 따라서 EUP를 게임 공용 고정 길이 로더 `0x2AA10`으로 읽는 게 아니라 별도 seek/크기/할당 경로로 적재한다.
+초기화와 스테이지 자료표에서 보이는 `0x33514(filename, slot)`은 EUP 전용 적재 함수다. 슬롯 배열은 `0x926F4 + slot × 0x1E4`의 484-byte 레코드다. 함수는 `"rb"`로 파일을 열고 크기를 구해 `0x806` 이하 파일을 거부한다. 음악 파일의 시작 부분에는 `NAME ENTRY`, `MAKE AN ASSAULT ON ENEMY` 같은 트랙명이 저장돼 있다. 적재 함수는 헤더 여러 위치에서 제어 자료를 슬롯의 `+0x1A4`와 `+0x1C4` 배열로 복사하고, 파일의 `0x806` 오프셋 이후 길이(파일 크기 − `0x806`)만큼 동적 버퍼를 할당해 읽는다. 따라서 EUP를 게임 공용 고정 길이 로더 `0x2AA10`으로 읽는 게 아니라 별도 seek/크기/할당 경로로 적재한다.
 
 공용 재생 함수 `0x33730(slot)`은 먼저 내부 서비스 `AH=03h`를 호출해 이전 EUP 스트림을 중지한다. 슬롯의 첫 번째 32-byte 제어 배열(`+0x1A4`)은 내부 서비스 `AH=14h`에 채널별로 1 byte씩, 두 번째 배열(`+0x1C4`)은 `AH=13h`에 전달한다. 이 내부 서비스 테이블 `0x3A714`에서 각각 `0x3ABC8`과 `0x3ABA0`으로 가며, 32개 채널의 전역 보정 배열 `0xCFE20` 및 `0xCFE40`을 설정한다. 슬롯 `+0x10`은 `AH=09h`로 전달되고, `+0`의 EUP 데이터 포인터·`+4`의 길이·`+8`의 재생 옵션은 `AH=02h`로 전달된다. 내부 서비스 점프 테이블은 게임 자체 기능이며 TBIOS SND BIOS의 호출 번호표와 별개다.
 
@@ -123,7 +123,7 @@ ALLTYNEX.EXP는 단순한 평면 코드 덩어리가 아니라 P3 형식 헤더 
 FMB 파서 `0x39480`은 파일의 선두 8 bytes를 읽은 뒤 48-byte 레코드를 최대 128개 읽어 내부 서비스 래퍼 `0x3934C`에 순번과 함께 전달한다. 8 + 128×48 = 6,152 bytes이므로 `ST_2.FMB`의 크기와 정확히 맞는다. 래퍼는 `AH=05h`, `BL=0`(FM 채널), `DH=레코드 순번`, `DS:ESI=레코드 주소`를 SND BIOS에 전달하고, FreeTOWNSOS `SND_INST_WRITE`는 이를 `FMInst[순번]`에 복사한다.
 
 PMB 파서 `0x395C4`는 처음 4,104 bytes(8-byte 선두 필드 + 128-byte 레코드 32 개)를 읽고, 각 레코드를 `0x3934C`에 `BL=0x40`(PCM 채널), `DH=레코드 순번`으로 전달해 `PCMInst[순번]`에 등록한다. 이어 `0x3938C(AH=23h, EDX=0xFFFFFFFF)`로 기존 PCM 음성 목록을 비운 뒤 32-byte 제어 블록을 읽는다. 그 블록의 오프셋 `+12` dword가 뒤따르는 스트림 데이터 길이이며 상한은 65,536 bytes다. 해당 데이터는 32-byte 블록과 함께 `0x3937C(AH=22h)`에 공급되고, 0 반환이 나올 때까지 반복한다. 두 PMB의 총 크기가 서로 다르므로 이 길이 필드는 각 파일의 실제 payload 길이를 구분한다. 이 결과로 FMB/PMB의 참조·로딩·내부 서비스 전달을 확인했다. 개별 48/128-byte 레코드의 음색 파라미터 평가는 악기 인덱스·샘플 선택 연결과 구별한다.
-EUP 슬롯은 초기 공통 효과/음악 `AL_OVER.EUP`=7, `ALERT.EUP`=6, `NAME.EUP`=5 와 스테이지 음악·보스 음악 0–4 를 같이 보관한다. 스테이지마다 이름표 호출에서 확인된 매핑은 slot 0=`STAGE_nA.EUP`, slot 1=`STAGE_nB.EUP`, slot 2=각 구역 보스 트랙, 이후 구역은 추가 보스 트랙을 slot 3/4 에도 적재한다. 구체적인 재생 함수 호출은 게임 중 상황 분기를 더 연결 중이다.
+EUP 슬롯은 초기 공통 효과/음악 `AL_OVER.EUP`=7, `ALERT.EUP`=6, `NAME.EUP`=5 와 스테이지 음악·보스 음악 0–4 를 같이 보관한다. 스테이지마다 이름표 호출에서 확인된 매핑은 slot 0=`STAGE_nA.EUP`, slot 1=`STAGE_nB.EUP`, slot 2=각 구역 보스 트랙, 이후 구역은 추가 보스 트랙을 slot 3/4 에도 적재한다. 구체적인 재생 함수 호출의 게임 중 상황 분기는 일부 미확정이다.
 
 
 #### EUP 헤더 제어 배열과 6-byte 이벤트 스트림
@@ -335,8 +335,8 @@ FreeTOWNSOS 이미지의 /ALLTYNEX 디렉터리에서 다음 자료를 확인했
 | 팔레트 | `ALLTYNEX.PAL` 8,192 bytes | SPR BIOS 팔레트 블록 한 항목이 32 bytes이므로 정확히 256개 블록 크기다. 공용 로더는 `0x2AB20`–`0x2AB8A` 구간에서 버퍼 `0x4022C`로 읽고, `0x2AB1B`의 `0x33D20`이 SPR 팔레트 블록으로 등록한다. |
 | EUP 음악 | EUP 22개; 파일 시작에 `ALERT`, `MAKE AN ASSAULT...`, `TYRANNY`, `ETERNAL BLUE`, `NAME ENTRY` 같은 트랙/시퀀스 이름이 보임 | `.EUP`는 FM TOWNS의 EUPHONY 음악 연주 데이터 형식이다([EUPHONY 설명 및 오픈소스 플레이어](https://github.com/gzaffin/eupmini)). 파일명·헤더 문자열과 EXP 리소스 표가 스테이지/보스/오프닝/이름 입력/스태프 장면용 음악임을 가리킨다. 모든 재생 호출의 장면별 귀속은 미확정이다. |
 | FM 악기 뱅크 | `ST_2.FMB` 6,152 bytes | 크기는 8-byte 접두 + 128개 × 48-byte `FMB_INSTRUMENT`와 정확히 일치한다. EUP 보조 로더 `0x39480`이 접두 뒤 각 레코드를 읽어 `0x3934C`→SND BIOS AH=05h(`SND_INST_WRITE`)로 전달한다. 전달 인자는 `BL=FM 채널 0`, `DH=악기 인덱스 0–127`, `DS:ESI=레코드`다. FreeTOWNSOS [`SND.C`](https://github.com/captainys/FreeTOWNSOS/blob/b72f4066b20b08d78fbfaf876e4f629c77cbb56f/tgbios/SND.C)의 구현은 이 레코드를 `SND_Status.FMInst[index]`에 복사한다. |
-| PCM 악기·파형 뱅크 | `SATOSHI.PMB` 67,828 bytes, `SAT_2.PMB` 64,270 bytes | PMB 로더는 32개 악기표를 BIOS `AH=05h`, `BL=0x40`으로 등록하고 `AH=23h`로 기존 음성 목록을 비운 뒤, 실제 `PCM_Voice_Header`와 파형 블록을 `AH=22h`로 공급한다. 악기표의 8개 split/ID/envelope와 voice header 경계, BIOS PCM RAM 예약·루프·주파수 사용은 아래 PMB 구조 절에서 파일 바이트와 함께 정리한다. |
-| 스테이지/게임 데이터 | `32K_*.DAT` 131,072 bytes; `ENE_*.DAT` 각 16,000 bytes; `M*_*.DAT` 64–4,096 bytes; `MTITLE.DAT` 256 bytes; `PLAYDEMO.DAT` 16,384 bytes | `M*_1`·`M*_2`는 비영 byte를 `0x280+ID` 값으로 SPR AH=05h 속성 호출에 보내는 오버레이 경로이고, `M*_3`는 32K DAT를 참조하는 EGB 배경 경로임을 코드에서 확인했다. 타이틀 P에서 raw `0xA0`와 실제 pattern entry `0xA0`가 대응하는 예를 확인했고, 동일 번호 관례가 `0x280+ID`에도 적용된다는 근거가 강하다. 개별 M ID/ENE 객체와 PAT 도형의 시각적 이름은 계속 대조 중이다. ENE의 1-byte 명령 디스패치와 가로 16칸 처리도 연결했다. |
+| PCM 악기·파형 뱅크 | `SATOSHI.PMB` 67,828 bytes, `SAT_2.PMB` 64,270 bytes | PMB 로더는 32개 악기표를 BIOS `AH=05h`, `BL=0x40`으로 등록하고 `AH=23h`로 기존 음성 목록을 비운 뒤, 실제 `PCM_Voice_Header`와 파형 블록을 `AH=22h`로 공급한다. 악기표의 8개 split/ID/envelope와 voice header 경계, BIOS PCM RAM 예약·루프·주파수 사용은 앞의 PMB 악기표·음성 헤더·파형 경계 절에서 파일 바이트와 함께 정리한다. |
+| 스테이지/게임 데이터 | `32K_*.DAT` 131,072 bytes; `ENE_*.DAT` 각 16,000 bytes; `M*_*.DAT` 64–4,096 bytes; `MTITLE.DAT` 256 bytes; `PLAYDEMO.DAT` 16,384 bytes | `M*_1`·`M*_2`는 비영 byte를 `0x280+ID` 값으로 SPR AH=05h 속성 호출에 보내는 오버레이 경로이고, `M*_3`는 32K DAT를 참조하는 EGB 배경 경로임을 코드에서 확인했다. 타이틀 P에서 raw `0xA0`와 실제 pattern entry `0xA0`가 대응하는 예를 확인했고, 동일 번호 관례가 `0x280+ID`에도 적용된다는 근거가 강하다. 개별 M ID/ENE 객체와 PAT 도형의 시각적 이름은 미확정이다. ENE의 1-byte 명령 디스패치와 가로 16칸 처리도 연결했다. |
 EXP의 문자열 표에는 `.FMB`·`.PMB` 완성 파일명이 없지만, 이는 리터럴을 코드에 저장하지 않고 EUP 헤더의 두 8-byte stem으로부터 동적으로 만든다. 로더 호출과 `SND_INST_WRITE`·`SND_22H_PCM_SOUND_SET` BIOS 인자를 FreeTOWNSOS 원본 구현과 대조해 FMB 악기 표와 PMB 악기/파형을 실제 사용하는 경로를 확정했다. PMB의 32-byte 파형 헤더 개수와 상세 필드는 앞의 악기·파형 경계 절에서 확인한다.
 
 | 실행/설정 | `ALLTYNEX.EXE` 598,678 bytes, `ALLTYNEX.EXP` 267,304 bytes, `CFGDAT.SAV` 3,337 bytes, `README.DOC` | EXP는 아래의 P3 32-bit 실행 이미지다. README는 조작/화면 흐름을 설명하며, CFGDAT.SAV의 헤더와 128개 레코드 크기는 별도 절에서 분석한다. |
@@ -487,18 +487,12 @@ ITLE.DAT 렌더 루프는 16×16=256개 인덱스를 처리하므로 실제 파�
 
 | 데이터표 위치 | 스테이지/장면 문자열 | 파일명 묶음 |
 |---:|---|---|
-| 0x3BD04 | `FIRST AREA`, `ATTACK THE ENEMY`, `TARGET DESTROYED`, `FIRST AREA IS OVER` | `32K_1.DAT`, `M1_*`, `ENE_1.DA
-T`, `ST1_*.PAT`, `STAGE_1A/B.EUP`, `BOS_01_A.EUP` |
-| 0x3BE20 | `SECOND AREA`, `ATTACK THE ZLDYZANT BASE`, `TARGET DESTROYED`, `SECOND AREA IS OVER` | `32K_2.DAT`, `M2_*`,
- `ENE_2.DAT`, `ST2_*.PAT`, `STAGE_2A/B.EUP`, `BOS_02_A.EUP` |
-| 0x3BF30 | `THIRD AREA`, `THE BITTER COLD WIND`, `TARGET DESTROYED`, `THIRD AREA IS OVER` | `32K_3.DAT`, `M3_*`, `ENE_
-3.DAT`, `ST3_*.PAT`, `STAGE_3A/B.EUP`, `BOS_03_A/B.EUP` |
-| 0x3C040 | `LAST AREA`, `LAST DEFENSE LINE`, `TARGET DESTROYED`, `LAST AREA IS OVER` | `32K_4.DAT`, `M4_*`, `ENE_4.DAT
-`, `ST4_*.PAT`, `STAGE_4A/B.EUP`, `BOS_03_A/B.EUP` |
-| 0x3C134 | 스테이지 5 리소스 목록 | `32K_5.DAT`, `M5_*`, `ENE_5.DAT`, `ST5_*.PAT`, `STAGE_5A/B.EUP`, `BOS_05_A/B/C.EUP
-` |
-| 0x3C410 / 0x3C460 | `FINAL AREA`, `AGGRESSIVE ATTACK`, `TARGET DESTROYED`, `FINAL TARGET`, `ALLTYNEX` | 끝 장면 리소
-스 표: `32K_5_2.DAT`, `32K_5.DAT`, `ENE_6.DAT`, `ROLL_G.PAT`, `STAFF.EUP` 두 항목 |
+| 0x3BD04 | `FIRST AREA`, `MAKE AN ASSAULT ON ENEMY`, `TARGET DESTROYED`, `FIRST AREA IS OVER` | `32K_1.DAT`, `M1_*`, `ENE_1.DAT`, `ST1_*.PAT`, `STAGE_1A/B.EUP`, `BOS_01_A.EUP` |
+| 0x3BE20 | `SECOND AREA`, `ATTACK THE ZLDYZANT BASE`, `TARGET DESTROYED`, `SECOND AREA IS OVER` | `32K_2.DAT`, `M2_*`, `ENE_2.DAT`, `ST2_*.PAT`, `STAGE_2A/B.EUP`, `BOS_02_A.EUP` |
+| 0x3BF30 | `THIRD AREA`, `THE BITING COLD WIND`, `TARGET DESTROYED`, `THIRD AREA IS OVER` | `32K_3.DAT`, `M3_*`, `ENE_3.DAT`, `ST3_*.PAT`, `STAGE_3A/B.EUP`, `BOS_03_A/B.EUP` |
+| 0x3C040 | `FORTH AREA`, `LAST DEFENCE LINE`, `TARGET DESTROYED`, `FORTH AREA IS OVER` | `32K_4.DAT`, `M4_*`, `ENE_4.DAT`, `ST4_*.PAT`, `STAGE_4A/B.EUP`, `BOS_03_A/B.EUP` |
+| 0x3C134 | 스테이지 5 리소스 목록 | `32K_5.DAT`, `M5_*`, `ENE_5.DAT`, `ST5_*.PAT`, `STAGE_5A/B.EUP`, `BOS_05_A/B/C.EUP` |
+| 0x3C410 / 0x3C460 | `FINAL AREA`, `AGGRESSIVE ATTACK`, `TARGET DESTROYED`, `FINAL TARGET`, `ALLTYNEX` | 끝 장면 리소스 표: `32K_5_2.DAT`, `32K_5.DAT`, `ENE_6.DAT`, `ROLL_G.PAT`, `STAFF.EUP` 두 항목 |
 
 일본어 원판 ZIP의 `README.DOC`를 CP932로 읽으면 실제 화면 전이가 “오프닝 데모 → 타이틀 → 일정 시간 입력이 없으면 플레이
  데모”라고 설명한다. 타이틀에서 RUN을 누르면 1P, 2P, 1P+2P, OPTION 메뉴가 나오고, 옵션에는 난이도, 잔기, 스테레오/모노,
@@ -576,7 +570,7 @@ CFGDAT 표본은 영문 ISO extent 1034, MD5 `21e852bd20b9563115138d847d7ccf39`�
 | 3 | REFLECT ATTACK | NO / YES |
 | 4 | AUTO SLOW DOWN | OFF / ON |
 | 5 | QUIT GAME | OFF / ON. ON은 정리 함수 `0x2B61C`를 부른 뒤 옵션 처리기의 공통 반환 경로로 이어진다. README.DOC의 종료 설명과 바이너리 흐름은 일치하지 않으며, DOS 종료 지점은 미확정이다. |
-| 6 | WAIT | `CFGDAT.SAV` 헤더 byte 7을 사용한다. 문자열 표에는 `FULL`, `HALF`, `3`–`8`의 8개 레이블이 있지만, 메뉴 초기화가 이 항목의 선택 범위를 0–1로 설정하므로 정상 메뉴 조작에서 도달하는 것은 `FULL`과 `HALF`다. 나머지 여섯 레이블의 사용 경로는 별도 코드에서 더 확인한다. |
+| 6 | WAIT | `CFGDAT.SAV` 헤더 byte 7을 사용한다. 문자열 표에는 `FULL`, `HALF`, `3`–`8`의 8개 레이블이 있지만, 메뉴 초기화가 이 항목의 선택 범위를 0–1로 설정하므로 정상 메뉴 조작에서 도달하는 것은 `FULL`과 `HALF`다. 나머지 여섯 레이블의 사용 경로는 미확정이다. |
 | 7 | DATA RESET | NO / YES. YES 분기는 10개 그룹×10개 레코드의 점수표 기본값을 메모리에 다시 만든다. |
 | 8 | EXIT | 옵션 화면에서 빠져나가며 CFGDAT 저장 함수 0x2D6E4를 호출한다. |
 
@@ -598,7 +592,7 @@ CFGDAT 표본은 영문 ISO extent 1034, MD5 `21e852bd20b9563115138d847d7ccf39`�
 옵션 인덱스 5(QUIT GAME)의 ON 분기는 처리기 `0x2BF00` 안의 `0x2C151`에서 정리 함수 `0x2B61C`를 부른다. 정리 함수는 `0x3A468`(EUP 내부 AH=03h 정지), `0x3392C`(5 개 EUP 슬롯의 동적 버퍼 정리), `0x3A444`(내부 서비스 AH=01h), `0x39198`(TBIOS 호출 묶음), `0x33CD4`(SPR AH=01h, AL=00h: 지정 스프라이트 정지), `0x34BF8(0)` 순서로 부르고 반환한다. 이어 옵션 처리기는 공통 후속 경로 `0x2C267`로 가서 행을 다시 그리고 현재 선택 결과를 반환한다. 함수 시작 때 EDI는 `0x100`이고 QUIT 행은 이를 덮어쓰지 않는다. 호출부 `0x2B66C:0x2BC5F–0x2BC97`는 반환값 8 일 때만 옵션을 닫고 로컬 상태 4 로 바꾸며, 값 8 은 행 8 EXIT의 경로가 설정한다. 따라서 정적으로 확인한 QUIT 행 경로는 정리 뒤 옵션 반환으로 이어진다. README.DOC의 “QUIT GAME=YES 후 A 버튼으로 프로그램 종료”와는 맞지 않는다. 행 5 경로에서 DOS INT 21h 종료 스텁 `0x34C26`으로 가는 명시 분기는 발견하지 못했으며, 프로세스 종료가 어디서 완성되는지는 미확정이다.
 
 
-설정표는 `0x93628`부터 항목당 3-byte `{현재값, 최소, 최대}` 레코드로 접근한다. 메뉴 루프는 상하 입력으로 항목 0–8 을 순환시키고 좌우 입력으로 현재값을 경계 사이에서 순환시킨다. 로컬 패드 ABI 기준 UP/DOWN/LEFT/RIGHT 단독 입력은 active-low 값 `0xFD/0xFE/0xFB/0xF7`에 대응한다. 화면은 값에 맞는 수치/문자열을 선택해 `0x26C9C` SPR 경로로 출력한다. LIFE 선택값은 0–4 이며, 플레이어 초기화는 `CFGDAT.SAV` 헤더 byte 1 을 읽어 플레이어 레코드 `+0`에 `선택값+1`을 기록한다. 아래의 상태 처리·표시 경로에서 `+0`이 잔기 카운터로 쓰이는 것도 확인했다. 메뉴 항목별 확인/복귀 처리와 게임 중 이동·발사 상태로 이어지는 버튼 의미는 계속 추적한다.
+설정표는 `0x93628`부터 항목당 3-byte `{현재값, 최소, 최대}` 레코드로 접근한다. 메뉴 루프는 상하 입력으로 항목 0–8 을 순환시키고 좌우 입력으로 현재값을 경계 사이에서 순환시킨다. 로컬 패드 ABI 기준 UP/DOWN/LEFT/RIGHT 단독 입력은 active-low 값 `0xFD/0xFE/0xFB/0xF7`에 대응한다. 화면은 값에 맞는 수치/문자열을 선택해 `0x26C9C` SPR 경로로 출력한다. LIFE 선택값은 0–4 이며, 플레이어 초기화는 `CFGDAT.SAV` 헤더 byte 1 을 읽어 플레이어 레코드 `+0`에 `선택값+1`을 기록한다. 아래의 상태 처리·표시 경로에서 `+0`이 잔기 카운터로 쓰이는 것도 확인했다. 메뉴 항목별 확인/복귀 처리와 게임 중 이동·발사 상태로 이어지는 버튼 의미는 일부 미확정이다.
 
 ### CFGDAT 옵션값과 실행 경로의 연결
 
@@ -606,7 +600,7 @@ CFGDAT 표본은 영문 ISO extent 1034, MD5 `21e852bd20b9563115138d847d7ccf39`�
 
 | 헤더 byte | 옵션 | 확인된 소비 지점 | 정적 코드에서 확인되는 영향 |
 |---:|---|---|---|
-| 0 | GAME LEVEL | `0x24D1A`, `0x25815`, `0x2599E`, `0x26130`, `0x26FED`, `0x2F90C`, `0x2D084` 등 | 난이도 값으로 `0x3F6E8` 계열 표를 조회해 객체 디스크립터의 이동/경계 계열 필드와 스테이지 객체 파라미터를 결정한다. 같은 값은 점수표 레코드 묶음 인덱스에도 들어간다. 각 배열 항목이 실제 난이도에서 보이는 효과는 상태/도형 분석과 계속 대조한다. |
+| 0 | GAME LEVEL | `0x24D1A`, `0x25815`, `0x2599E`, `0x26130`, `0x26FED`, `0x2F90C`, `0x2D084` 등 | 난이도 값으로 `0x3F6E8` 계열 표를 조회해 객체 디스크립터의 이동/경계 계열 필드와 스테이지 객체 파라미터를 결정한다. 같은 값은 점수표 레코드 묶음 인덱스에도 들어간다. 각 배열 항목이 실제 난이도에서 보이는 효과는 일부 미확정이다. |
 | 1 | LIFE | `0x27858`, 계속 초기화 `0x277F4` | 선택값에 1을 더해 플레이어 레코드 +0에 기록한다. |
 | 2 | AUDIO | 음향 공통 함수 `0x337B0` | 값이 1이면 세 번째 인자(좌우 위치/팬으로 쓰이는 값)를 `0x40`으로 강제해 중앙에 둔다. 이후 `0x392C8`, `0x392EC`, `0x392D8`, `0x392B0` 경로로 음향 명령을 전달한다. 이 실행 코드에서 MONO는 음향 위치를 중앙값으로 고정한다. |
 | 3 | REFLECT ATTACK | 객체 생성 `0x27070`, 처리기 `0x32167`, `0x32412` | 새 44-byte 객체의 +8 필드에 `0x100 + 52×설정값`을 쓰며, 값 1이면 두 처리기에서 추가 방향 계산 `0x2753C` 분기로 들어간다. UI 이름과 이 분기는 부합하지만, 해당 객체가 화면에서 어떤 공격/반사 효과를 나타내는지는 ENE·PAT 도형 대조를 더 해야 한다. |
@@ -769,14 +763,14 @@ raw EXP record      = 0x3C6B8 + [0x3F3DC] * 0x56
 | 장면 | 호출 주소 → 문자열 위치 | 문자열 바이트(공백 표시는 `@`) |
 |---|---|---|
 | 타이틀 | `0x2DB94` → `0x3F1FC` | `PROJECT@RAID@WIND@2` |
-| 1구역 | `0x5E9`, `0x619`, `0x6F0`, `0x715` | `FIRST@AREA`, `@@@@ATTACK@THE@ENEMY`, `TARGET@DESTROYED`, `FIRST@AREA@IS@OVER` |
+| 1구역 | `0x5E9`, `0x619`, `0x6F0`, `0x715` | `FIRST@AREA`, `MAKE@AN@ASSAULT@ON@ENEMY`, `TARGET@DESTROYED`, `FIRST@AREA@IS@OVER` |
 | 2구역 | `0x5F60`, `0x5F90`, `0x6067`, `0x608C` | `SECOND@AREA`, `ATTACK@THE@ZLDYZANT@BASE`, `TARGET@DESTROYED`, `SECOND@AREA@IS@OVER` |
-| 3구역 | `0xAFAD`, `0xAFDD`, `0xB0B4`, `0xB0D9` | `THIRD@AREA`, `THE@BITTER@COLD@WIND`, `TARGET@DESTROYED`, `THIRD@AREA@IS@OVER` |
-| 4구역 | `0x13CB5`, `0x13CE5`, `0x13DBC`, `0x13DE1` | `LAST@AREA`, `LAST@DEFENSE@LINE`, `TARGET@DESTROYED`, `LAST@AREA@IS@OVER` |
+| 3구역 | `0xAFAD`, `0xAFDD`, `0xB0B4`, `0xB0D9` | `THIRD@AREA`, `THE@BITING@COLD@WIND`, `TARGET@DESTROYED`, `THIRD@AREA@IS@OVER` |
+| 4구역 | `0x13CB5`, `0x13CE5`, `0x13DBC`, `0x13DE1` | `FORTH@AREA`, `LAST@DEFENCE@LINE`, `TARGET@DESTROYED`, `FORTH@AREA@IS@OVER` |
 | 최종 구역 | `0x1CC17`, `0x1CC47`, `0x1CD11`, `0x1CDBB`, `0x1CDE0` | `FINAL@AREA`, `AGGRESSIVE@ATTACK`, `TARGET@DESTROYED`, `FINAL@TARGET`, `ALLTYNEX` |
 | 전환 UI | `0x2AE3D` | `NOW@LOADING` |
 
-기존 P의 ASCII 0x50 에 게임이 0x50 을 더해 SPR AH=05h 직전 ESI=0xA0 으로 전달되는 것이 Tsugaru 로그에서 확인됐다. `PRINT SPRPTN4 0xA0`의 패턴 RAM 내용 128 bytes는 `ALLTY_1.PAT` 파일 오프셋 0x1000(등록 시작 0x80 + 0x20 patterns)과 일치하고, 사용자가 올린 화면에는 `PROJECT`의 P가 실제로 보인다. 따라서 이 실행에서 타이틀 P의 raw value 0xA0 와 pattern entry 0xA0 은 일치한다. FreeTOWNSOS 자체 테스트 [`sprite01.c`](https://github.com/captainys/FreeTOWNSOS/blob/b72f4066b20b08d78fbfaf876e4f629c77cbb56f/tests/tgbios/sprite01.c)도 `SPR_define(..., ptnNum=128, ...)`와 `SPR_setAttribute(..., attrib=128, ...)`를 짝지어 사용해 같은 번호 관례를 보여 준다. 다만 [`SPR.C`](https://github.com/captainys/FreeTOWNSOS/blob/b72f4066b20b08d78fbfaf876e4f629c77cbb56f/tgbios/SPR.C)의 AH=05h 구현은 ESI를 attribute RAM에 그대로 기록하므로, 임의의 16-bit attribute의 비트 분해/하드웨어 fetch 규칙까지 소스에서 복원한 것은 아니다. 이 근거로 게임의 `0x280+ID`와 PAT 시작 번호 `0x280`은 같은 번호 관례를 따르는 것으로 강하게 지지되며, 객체별 ID와 도형 이름·상위 attribute 비트 의미는 계속 대조해야 한다.
+기존 P의 ASCII 0x50 에 게임이 0x50 을 더해 SPR AH=05h 직전 ESI=0xA0 으로 전달되는 것이 Tsugaru 로그에서 확인됐다. `PRINT SPRPTN4 0xA0`의 패턴 RAM 내용 128 bytes는 `ALLTY_1.PAT` 파일 오프셋 0x1000(등록 시작 0x80 + 0x20 patterns)과 일치하고, 사용자가 올린 화면에는 `PROJECT`의 P가 실제로 보인다. 따라서 이 실행에서 타이틀 P의 raw value 0xA0 와 pattern entry 0xA0 은 일치한다. FreeTOWNSOS 자체 테스트 [`sprite01.c`](https://github.com/captainys/FreeTOWNSOS/blob/b72f4066b20b08d78fbfaf876e4f629c77cbb56f/tests/tgbios/sprite01.c)도 `SPR_define(..., ptnNum=128, ...)`와 `SPR_setAttribute(..., attrib=128, ...)`를 짝지어 사용해 같은 번호 관례를 보여 준다. 다만 [`SPR.C`](https://github.com/captainys/FreeTOWNSOS/blob/b72f4066b20b08d78fbfaf876e4f629c77cbb56f/tgbios/SPR.C)의 AH=05h 구현은 ESI를 attribute RAM에 그대로 기록하므로, 임의의 16-bit attribute의 비트 분해/하드웨어 fetch 규칙까지 소스에서 복원한 것은 아니다. 이 근거로 게임의 `0x280+ID`와 PAT 시작 번호 `0x280`은 같은 번호 관례를 따르는 것으로 강하게 지지되며, 객체별 ID와 도형 이름·상위 attribute 비트 의미는 미확정이다.
 
 ### 화면 출력 경로의 구별
 
@@ -839,7 +833,7 @@ raw EXP record      = 0x3C6B8 + [0x3F3DC] * 0x56
 
 메인 상태 11은 `0x2AE80`에서 최종 처리기 `0x26704`를 부른다. 이 처리기의 첫 진입 초기화 `0x2650C`는 `ENE_6.DAT` 16,000 bytes를 `0x7222C`에, `ROLL_G.PAT` 49,152 bytes를 `0x4222C`에 적재한다. 후자는 SPR 시작 번호 `0x280`, AL=0(16색), DH=16, DL=24, 원본 `0x4222C`로 등록된다. FreeTOWNSOS `SPR_DEFINE`는 16색 패턴당 128 bytes를 복사하고 DH×DL개를 처리하므로 총 384개, 49,152 bytes가 된다. 이는 `ROLL_G.PAT` 파일 크기와 정확히 일치한다. 초기화는 `STAFF.EUP`을 EUP 슬롯 0으로 `0x33514`에 넘기고, 같은 이름을 `0x33348`에도 전달한다. 후자는 EUP 헤더에 저장된 보조 파일 stem을 읽어 해당 FMB/PMB 자료를 여는 코드다. 아래의 EUP 보조 리소스 절에서 일본 원판 파일과의 대응 및 파서 입력 구조를 확인했다. 이어 `0x33730(0)`이 슬롯의 제어 배열을 내부 EUP 서비스에 전달한다.
 
-최종 처리기 `0x26704`는 초기화 때 런타임 이미지 주소 `0x3C4A8`의 6,880 bytes를 로컬 버퍼로 복사한다. 이에 대응하는 압축 P3 EXP raw 파일 범위 시작은 `0x3C6B8`이다. 길이는 정확히 80 개의 86-byte 레코드다. 각 레코드는 `{int16 x, int16 y, uint16 len, uint8 str[40]}`로 읽히며 로컬 FreeTOWNSOS `EGB.H`의 `EGB_String`과 같은 앞부분 레이아웃이다. 모든 항목의 len은 40 bytes이고, 문자열은 영문판에서 Shift-JIS 전각 ASCII로 저장돼 있다. 레코드 주소 준비는 기존 기록의 `0x267C2` 부근이며 실제 래퍼 직접 CALL은 `0x267C8`이다. 래퍼는 EGB AH=60h(`EGB_SJISSTRING`)로 그대로 넘긴다. 로컬 FreeTOWNSOS의 EGB AH=60h 경로는 해당 문자열을 이 OS 구현의 시스템 폰트 ROM 조회에 전달한다.
+최종 처리기 `0x26704`는 초기화 때 런타임 이미지 주소 `0x3C4A8`의 6,880 bytes를 로컬 버퍼로 복사한다. 이에 대응하는 압축 P3 EXP raw 파일 범위 시작은 `0x3C6B8`이다. 길이는 정확히 80 개의 86-byte 레코드다. 각 레코드는 `{int16 x, int16 y, uint16 len, uint8 str[80]}`로 읽히며 로컬 FreeTOWNSOS `EGB.H`의 `EGB_String`과 같은 앞부분 레이아웃이다. 모든 항목의 len은 40 bytes이고, 문자열은 영문판에서 Shift-JIS 전각 ASCII로 저장돼 있다. 레코드 주소 준비는 기존 기록의 `0x267C2` 부근이며 실제 래퍼 직접 CALL은 `0x267C8`이다. 래퍼는 EGB AH=60h(`EGB_SJISSTRING`)로 그대로 넘긴다. 로컬 FreeTOWNSOS의 EGB AH=60h 경로는 해당 문자열을 이 OS 구현의 시스템 폰트 ROM 조회에 전달한다.
 
 비어 있지 않은 레코드의 인덱스·위치·텍스트는 다음과 같다. 빈 레코드도 좌표 간격과 스크롤 순서를 유지하므로 단순 삭제하면 안 된다.
 
@@ -873,7 +867,7 @@ raw EXP record      = 0x3C6B8 + [0x3F3DC] * 0x56
 
 최종 처리기는 크레딧 출력 이외에도 `0x90148`부터 44-byte 간격의 객체 레코드 96 개를 훑는다. `[0x8EEE8]`은 `0x2650C`에서 `ENE_6.DAT` 버퍼 `0x7222C`로 설정되고, 이 루프는 호출 1 회마다 바이트 16 개를 순서대로 읽어 포인터를 16 칸 전진시킨다. 실제 `ENE_6.DAT` 16,000 bytes는 0 으로 채워져 있고 `0x2F6`에만 `01`이 있다. 따라서 ENE 입력 배치 48 번째의 내부 인덱스 6 에서 opcode1 이 들어온다. 하위 4 비트 gate가 입력 배치 실행을 제한하므로 이 수치를 최종 처리기 호출 48 회로 해석하지 않는다. 이벤트 분기는 현재 첫 미사용 객체 블록의 디스크립터를 설정한다: 좌표 필드 x=0, y=0x1800(위치 API가 6 비트 고정소수점을 적용해 y=96), 격자 8×6, `+0x0A=0x280`, `+0x08=0x01D6`, 상태 10, 활성값 1. `SPR_SETPOSITION`은 `806 + 현재 할당 오프셋`을 시작 슬롯으로 삼아 8×6 위치를 배치한다. `SPR_SETATTRIBUTE`는 같은 스프라이트 레지스터 범위에 raw attribute 시작값 `0x280`, color-table 값 `0x81D6`을 쓴다. `ROLL_G.PAT`가 시작 번호 `0x280`으로 384 개를 등록하므로 수치 체계가 정렬되고, 타이틀 P의 raw `0xA0` 사례도 같은 번호가 대응하는 실제 패턴을 확인해 준다. 다만 이 최종 객체의 `0x280` 블록이 화면에서 실제 `ROLL_G.PAT`의 어느 도형을 읽는지까지는 아직 대조하지 않았다. 스캔 로직은 객체 격자 크기 8×6 만큼 44-byte 레코드 블록을 건너뛴다. 이는 ENE_6 → 미사용 객체 블록 선택 → SPR 위치/속성 쓰기의 연결을 확정한다.
 
-96개 레코드 중 `+0x14==1`인 항목만 상태 갱신 대상으로 처리하며 `+0x10` 값 0–10은 전용 점프표 `0x26AB6`로 분기한다. 최종 상태 10의 목적지는 `0x26B28`이다. 이 함수는 활성 갱신마다 디스크립터 `+0x12` 카운터를 증가시킨다. 카운터가 580/1,180/1,780/2,380/2,980/3,580일 때 `+0x08`을 `0x2000`으로 바꾸고, 600/1,200/1,800/2,400/3,000일 때 `+0x08=0x01D6`로 복귀시키며 `+0x0A`를 48 증가시킨다. 각 갱신에서 현재 객체 인덱스에 해당하는 8×6 SPR 위치(AH=04h)와 속성(AH=05h)을 다시 쓴다. AH=05h 인자는 `+0x0A`의 raw attribute 시작값과 `+0x08 | 0x8000`의 color-table 필드다. FreeTOWNSOS `SPR_SETATTRIBUTE`에서 color-table bit15는 격자 셀마다 기록되는 attribute 값을 1씩 증가시키는 모드다. raw attribute 시작값은 `0x280, 0x2B0, 0x2E0, 0x310, 0x340, 0x370`으로 바뀌고 각 블록은 8×6=48셀을 채운다. 이는 `ROLL_G.PAT`의 384개 등록 범위를 여섯 48-cell 블록으로 나누는 수치와 맞는다. 타이틀 P에서는 같은 번호의 단일 패턴 대응을 확인했지만, 이 최종 객체의 각 raw value가 실제로 해당 `ROLL_G.PAT` 도형을 fetch하는지와 그 화면상 모양은 아직 직접 대조하지 않았다. 다른 상태 처리기와 공통 꼬리 `0x27F04`의 상태별 역할은 계속 분석한다.
+96개 레코드 중 `+0x14==1`인 항목만 상태 갱신 대상으로 처리하며 `+0x10` 값 0–10은 전용 점프표 `0x26AB6`로 분기한다. 최종 상태 10의 목적지는 `0x26B28`이다. 이 함수는 활성 갱신마다 디스크립터 `+0x12` 카운터를 증가시킨다. 카운터가 580/1,180/1,780/2,380/2,980/3,580일 때 `+0x08`을 `0x2000`으로 바꾸고, 600/1,200/1,800/2,400/3,000일 때 `+0x08=0x01D6`로 복귀시키며 `+0x0A`를 48 증가시킨다. 각 갱신에서 현재 객체 인덱스에 해당하는 8×6 SPR 위치(AH=04h)와 속성(AH=05h)을 다시 쓴다. AH=05h 인자는 `+0x0A`의 raw attribute 시작값과 `+0x08 | 0x8000`의 color-table 필드다. FreeTOWNSOS `SPR_SETATTRIBUTE`에서 color-table bit15는 격자 셀마다 기록되는 attribute 값을 1씩 증가시키는 모드다. raw attribute 시작값은 `0x280, 0x2B0, 0x2E0, 0x310, 0x340, 0x370`으로 바뀌고 각 블록은 8×6=48셀을 채운다. 이는 `ROLL_G.PAT`의 384개 등록 범위를 여섯 48-cell 블록으로 나누는 수치와 맞는다. 타이틀 P에서는 같은 번호의 단일 패턴 대응을 확인했지만, 이 최종 객체의 각 raw value가 실제로 해당 `ROLL_G.PAT` 도형을 fetch하는지와 그 화면상 모양은 아직 직접 대조하지 않았다. 다른 상태 처리기와 공통 꼬리 `0x27F04`의 상태별 역할은 일부 미확정이다.
 
 위 여섯 descriptor의 범위는 각각 8×6 셀, 합계 288개 패턴(`0x280–0x39F`)이다. 등록된 PAT 전체는 384개(`0x280–0x3FF`)이며, 마지막 96개(`0x3A0–0x3FF`)는 이 여섯 범위에 포함되지 않는다. 이는 정적 번호·크기 대응이며 화면상 도형 이름이나 실제 표시 결과를 확정한 것은 아니다.
 
@@ -1090,7 +1084,7 @@ EXP 바이트에서 직접 INT 90h (CD 90) 명령은 발견되지 않았다. 이
 
 이 표에서 구역 2–6 의 각 상태 처리 주소는 런타임 jump table을 little-endian dword로 읽은 결과와 상태 loop의 직접 분기 코드를 대조했다. 구역 2 상태 `0x16`은 table 바깥 직접 분기 `0x896E`, `0x31`은 `0x9DA3`이며, `0x1E–0x30`은 별도 표의 인덱스 `state−0x1E`로 간다. 구역 3·4·5 의 표는 각각 254·206·205 entries이고, 구역 최종부는 11 entries다. 따라서 동일한 상태 코드라도 각 구역 행 안에서만 해석해야 한다.
 
-복합 생성 handler는 한 ENE byte만으로 여러 44-byte descriptor를 직접 초기화한다. 특히 구역 5 ENE 값 3 은 단일 객체가 아니라 16 개의 상태 슬롯을 설정하며, 구역 4 값 12 와 25, 구역 3 값 4·6·30 도 복수 디스크립터를 만든다. 여기까지는 초기 상태와 update handler 연결만 확정했다. 패턴 인덱스·크기·좌표/속도·수명 변경을 전부 상태별로 연결하고 해당 번호를 PAT 이미지의 도형에 대응시키는 작업은 다음 단계다.
+복합 생성 handler는 한 ENE byte만으로 여러 44-byte descriptor를 직접 초기화한다. 특히 구역 5 ENE 값 3 은 단일 객체가 아니라 16 개의 상태 슬롯을 설정하며, 구역 4 값 12 와 25, 구역 3 값 4·6·30 도 복수 디스크립터를 만든다. 여기까지는 초기 상태와 update handler 연결만 확정했다. 패턴 인덱스·크기·좌표/속도·수명 변경의 전체 상태별 연결과 PAT 이미지 도형의 대응은 미확정이다.
 
 ### ENE 초기화 시 raw attribute 저장 주소
 
@@ -1153,7 +1147,7 @@ ENE 5/6 의 dispatch는 공용 생성 꼬리 `0xC036`에 합류한다. ENE 5 는
 
 추가 대조에서 ENE 7–13 및 16 의 생성 블록도 확인했다. 목적지와 폭·높이, 초기 상태/하위 상태는 다음과 같다. 이 생성 블록에는 `+0x0A` immediate store가 없어 전역 descriptor 초기값과 이후 상태 처리기 값을 분리해야 한다.
 
-| ENE | 목적지 | `+0x16/+0x18` | 상태 초기값（필드 주의는 아래） | `+0x12` 초기값 |
+| ENE | 목적지 | `+0x16/+0x18` | 상태 초기값 `+0x10` | `+0x12` 초기값 |
 |---:|---:|---:|---:|---:|
 | 7 | `0xC182` | `2/2` | `0x1E` | 별도 값 없음 |
 | 8 | `0xC1C9` | `2/2` | `0x1E` | 별도 값 없음 |
@@ -1164,7 +1158,7 @@ ENE 5/6 의 dispatch는 공용 생성 꼬리 `0xC036`에 합류한다. ENE 5 는
 | 13 | `0xC359` | `2/2` | `0xD0` | `0x30` |
 | 16 | `0xC4E0` | `2/2` | `0xD2` | `0x30` |
 
-위 표의 기존 원고는 상태 필드를 `+0x1A`로 표기했지만, 생성 상태→상태 처리 주소 표와 공용 descriptor 규약은 `+0x10`을 상태, `+0x1A`를 하위 분기로 기록한다. 원고만으로 오프셋 차이를 재판정하지 않는다. 표의 값·주소·격자는 보존하며 해당 필드 표기는 재확인 대상이다.
+위 8개 생성 블록은 모두 descriptor `+0x10`에 상태 초기값을 저장한다. `+0x1A`는 이 표의 상태 저장 필드가 아니다.
 
 이벤트가 생성한 뒤의 상태 처리기에서 다음 raw attribute 공급식을 확인했다.
 
@@ -1266,19 +1260,20 @@ ENE 3 은 초기 처리기 `0x1DE30`에서 현재 descriptor base `[0x926EC]`를
 - Update/spawn split confirmed for Stage3: `0xC182/0xC1C9` are state-`0x1E` descriptor creation targets, while state `0x1E` itself dispatches to update handler `0xFF06`; the latter recalculates `+0x0A`, updates `+0x04/+0x06`, and draws. State `0x69` (`0x11C23`), `0x6A` (`0x11D1C`), `0x6B` (`0x11D6F`), `0xCC` (`0x120DC`), and `0xD2` (`0x12309`) likewise mutate and redraw existing descriptors rather than create new ones. State `0xD2` also changes `+0x1C`, advances `+0x1A`, and indexes `T16_3F500/T16_3F604` for position/animation fields.
 - State `0x0A` handler `0xD322` updates raw values by phase: default `0x02C4`; when descriptor `+0x04>0x10`, `0x02C8`; when `+0x04>0xF0`, `0x02C0`; a later phase returns to `0x02C4`. State `0x0C` handler `0xD5EE` chooses `0x02F4/0x02F0/0x02EC/0x02F0` for `+0x1A=0x50/0x60/0x70/0x80`; state `0x0D` handler `0xD76E` chooses `0x02E8/0x02E4/0x02E0/0x02E4` for the same phase sequence. These are update/animation stores, not ENE initialization values.
 - State `0x1A` update handler `0xF934` has computed raw store at `0xFAE2`: `0x03C0 + 4*T16_3F480[desc+0x12]`. State `0x15` table target `0xF0D6` first transitions the current descriptor to state `0x16` at `0xF124`, then sets allocator pointer `[0x926F0]=0x90358` and initializes a separate state-`0x17` descriptor at `0x90358` (`0xF1D4`), followed by a state-`0x18` descriptor at `0x904B8` (`0xF22C`). The child descriptors have distinct `+0x04` values (`0xFFE0` and `0x0020`), `+0x06=0x0040`, texture fields `+0x0C/+0x0E=0xFC18`, `+0x28=0xFFFFD8F0`, and zeroed phase fields. No state-`0x15` setter was found in the scanned Stage3 region, so its upstream reachability is unresolved. Further audited state transitions: state `0xCB` writes intermediate `1` at `0x120A1`, then state `0xCC` at `0x120D1` on the same descriptor, state `0xF9→1` at `0x12765`, and state `0xFA→0xFD` at `0x129D3` when descriptor `+0x1C >= 0x0960`.
-- Later Stage3 transition and spawn findings: state `0x32` handler entry `0x10786` updates the current descriptor to state `0x38` at `0x11091` when `+0x1A>=0x2710`, then advances/masks `+0x1C`, `+0x12`, and `+0x1A`; this is an update, not allocation. State `0x35` handler entry `0x110BF` has a branch at `0x113B7` (`ESI>=0x3F`) that resets allocation pointer `[0x926F0]=0x90148` and creates descriptors at states `0x32`, `0x36`, `0x37` (`0x113E8/0x1141C/0x11449`), with pointer increments `0x318` and `0x2C0`: state 32 is at `0x90148`, state 36 at `0x90460`, and state 37 at `0x90720`. State32 also writes `+0x28=0x2AF8`, zeroes `+0x12/+0x1A/+0x1C/+0x1E`, and sets `+0x20=0x1388`; later 36/37 handlers use aux coordinates as recorded below. No visual identities are assigned. State `0x38` handler `0x115C7` prepares two aux slots at current+`0x318` and +`0x344` by writing `+0x28=0xFFFFD8F0` and `+0x0C/+0x0E=0xFC18` (no aux state `+0x10` is set there), then zeros current phase fields `+0x1A/+0x1C/+0x1E/+0x20/+0x12` and `+0x04/+0x06`, and writes current state `0x39` at `0x11644`. Its loop scans `ESI=0x14..0x5F`, derives `[0x926F0]=0x90148+44*ESI`, tests slot `+0x10==4`, and calls helper/draw paths for matching slots. This establishes partial aux-record preparation and descriptor-array iteration, not proven spawn semantics. State `0x39` handler `0x116BF` changes current state to `0x3B` or `0x3A` at `0x11781/0x117A3`, while separately priming `[0x926F0]` to current base `+0x344` or `+0x318`; the consumer of that allocation pointer remains under analysis.
+- Later Stage3 transition and spawn findings: state `0x32` handler entry `0x10786` updates the current descriptor to state `0x38` at `0x11091` when `+0x1A>=0x2710`, then advances/masks `+0x1C`, `+0x12`, and `+0x1A`; this is an update, not allocation. State `0x35` handler entry `0x110BF` has a branch at `0x113B7` (`ESI>=0x3F`) that resets allocation pointer `[0x926F0]=0x90148` and creates descriptors at states `0x32`, `0x36`, `0x37` (`0x113E8/0x1141C/0x11449`), with pointer increments `0x318` and `0x2C0`: state 32 is at `0x90148`, state 36 at `0x90460`, and state 37 at `0x90720`. State32 also writes `+0x28=0x2AF8`, zeroes `+0x12/+0x1A/+0x1C/+0x1E`, and sets `+0x20=0x1388`; later 36/37 handlers use aux coordinates as recorded below. No visual identities are assigned. State `0x38` handler `0x115C7` prepares two aux slots at current+`0x318` and +`0x344` by writing `+0x28=0xFFFFD8F0` and `+0x0C/+0x0E=0xFC18` (no aux state `+0x10` is set there), then zeros current phase fields `+0x1A/+0x1C/+0x1E/+0x20/+0x12` and `+0x04/+0x06`, and writes current state `0x39` at `0x11644`. Its loop scans `ESI=0x14..0x5F`, derives `[0x926F0]=0x90148+44*ESI`, tests slot `+0x10==4`, and calls helper/draw paths for matching slots. This establishes partial aux-record preparation and descriptor-array iteration, not proven spawn semantics. State `0x39` handler `0x116BF` changes current state to `0x3B` or `0x3A` at `0x11781/0x117A3`, while separately priming `[0x926F0]` to current base `+0x344` or `+0x318`; the consumer of that allocation pointer is unresolved.
 - Further Stage3 closure for state `0x39`: signed `+0x1A==0x78` takes the 39→3B branch at `0x11781` and sets current `+0x04=0xFF80`; `+0x1A==0xA0` takes 39→3A at `0x117A3` and sets `+0x04=0x0080`. The branch sites do not initialize a child descriptor; the nearby `[0x926F0]` base adjustments are allocation-pointer preparation of unresolved purpose. State 3A (`0x119D9`) and 3B (`0x11AD0`) are parallel motion/update handlers: each moves descriptor `+0/+2`, updates signed `+0x04/+0x06`, increments `+0x1A`, and increments/masks `+0x12`; neither writes `+0x0A` or `+0x10` in the traced body. State 36 (`0x1147E`) reads auxiliary descriptor `[0x926F0]=0x90148`, writes current x=`aux.x−0x0200`, y=`aux.y+0x1000`, `+0x28=0xFFFFB1E0`, and geometry `+0x16/+0x18=1/1`; state 37 (`0x1150C`) uses the same auxiliary source and geometry but writes current x=`aux.x+0x1600`, y=`aux.y+0x1000`. Neither handler body writes `+0x0A/+0x10`; auxiliary data and visible identity remain unresolved. State 38’s loop work remains only partly resolved. State stubs 2F/30/31 (`0x1075F/0x1076D/0x1077B`) and 65–68 (`0x11BF1/0x11BFC/0x11C07/0x11C18`) call helpers and tail-jump; their helper semantics are not yet assigned.
 - Additional Stage3 state/descriptor links: state `0x14` (`0xEF52`) advances `+0x1C` modulo `0x10` and increments `+0x1E`; once `+0x1E>0x3C`, it resets `[0x926F0]` to `0x90148`, updates an allocation-base word, and sets the current descriptor state to `1` (`0xF0B2–0xF0CB`). State `0x1B` (`0xFB28`) initializes current `+0x1A/+0x1C/+0x1E/+0x20/+0x12=0`, `+0x0C/+0x0E=0xFC18`, `+0x28=0xFFFFD8F0`, then changes the current state to `0x1C` (`0xFB5E`) and sets allocator pointer relative to current base `+0x840`; any allocated child fields are separate. State `0x1C` (`0xFBC0`) increments/masks `+0x1C` to 3 bits and increments `+0x1A`; once `+0x1A>0x3C`, it changes current state to `3` (`0xFCDE`). State `0x20` (`0x1052E`) changes current state to `1` at `0x106AF` when `+0x1C>=0x1E`, while updating phase and position. These are descriptor-level transitions only; no visual names are inferred.
 - Additional Stage3 controller/update paths: states `0x33` and `0xFB` share entry `0x12A03`, while `0x34` and `0xFC` share `0x12A1B`; these handlers read auxiliary coordinates through `[0x926F0]=0x90148` and recalculate current `[0x926EC]+0/+2` using opposite x offsets (`−0x0800` vs `+0x1000`) and y `+0x0A00`. Shared tail `0x12A6B` dispatches current `+0x12` through five subcases (`0x12A81/0x12A95/0x12AC9/0x12AEC/0x12B08`) that update phase/timer/position fields; the scanned `0x12A03–0x12BC8` body has no direct `+0x0A/+0x10` writes. A subpath sets `[0x926F0]=0x909E0`, but no child descriptor initialization is proven. State `0x0E` (`0xD974`) has a branch only when current `+0x1C==2` (`0xDC8A`): it zeros current `+0x04/+0x06`, points `[0x926F0]` successively at `0x90358` and `0x904B8` and increments each auxiliary `+0x1C`, then writes phase DX to current `+0x1A`, increments current `+0x1C`, and stores `+0x28=0x07D0`. It manipulates two existing auxiliary records; no child `+0x10/+0x0A` initialization proves a spawn.
-- Stage3 state `0x0F` (`0xE74E`) updates current position from aux `[0x926F0]=0x90148`: current y copies aux y, x becomes aux x−`0x0600`+current `+0x04`; it increments current `+0x12`. State `0x10` (`0xE949`) uses the same aux base, copies y, and sets x=aux x+`0x0A00`+current `+0x04`, also incrementing `+0x12`. State `0x11` (`0xEBB0`) points aux to `0x90358`, while state `0x12` (`0xED05`) points it to `0x904B8`; both use common tail `0xEE55` to set current x=aux x and y=aux y+`0x0C00`. These are current-object motion updates, with no new state `+0x10` or raw `+0x0A` stores in the shared paths; the fixed aux coordinate records' producers remain to be traced.
+- Stage3 state `0x0F` (`0xE74E`) updates current position from aux `[0x926F0]=0x90148`: current y copies aux y, x becomes aux x−`0x0600`+current `+0x04`; it increments current `+0x12`. State `0x10` (`0xE949`) uses the same aux base, copies y, and sets x=aux x+`0x0A00`+current `+0x04`, also incrementing `+0x12`. State `0x11` (`0xEBB0`) points aux to `0x90358`, while state `0x12` (`0xED05`) points it to `0x904B8`; both use common tail `0xEE55` to set current x=aux x and y=aux y+`0x0C00`. These are current-object motion updates, with no new state `+0x10` or raw `+0x0A` stores in the shared paths; the fixed aux coordinate records' producers are unresolved.
 - Stage3 state-table coverage was checked against the 254-entry dword table at `0xCED2`: explicit non-fallback ranges are `00–20`, `2F–3B`, `65–6C`, `C9–D2`, `F8–FD`; `21–2E`, `3C–64`, `6D–C8`, and `D3–F7` point to common fallback `0x12BC8`. A bounded byte scan of active code `0xD322–0x12BC8` found direct descriptor `+0x0A` operations at `D3A5/D3B2/D3C4/D420`, `D624/D64C/D674/D6BE`, `D7A4/D7CC/D7F4/D83E`, `FAE2`, `100C4`, `11C70/7F/8E` (word increments), `11D21/3B`, `11D74/8E`, `11FED`, `120E1`, `12358`, and `12681`. This bounds direct encoded writes found in that range; helper-mediated/indirect updates are not excluded.
 - 스테이지 4 상태 `0x0E` handler `0x170F8`는 `+0x12`로 `T16_3F480`을 조회하고 `4×value+0x02F0`를 `0x1739F`에서 descriptor `+0x0A`에 쓴다. 상태 `0x11`은 `T16_3F500[+0x12]+0x0360`을 `0x177A9`에서 쓰고, 상태 `0x16`은 같은 표에 `0x0350`을 더해 `0x17D66`에서 쓴다. 해당 표 값의 의미와 PAT fetch 대응은 미확정이다.
 - Stage4 state `0x12` table target `0x177F5` initializes eight sequential child descriptors at current base+`0x580` (20×`0x2C`): zero `+0x12` at `0x17813`, zero state `+0x10` at `0x17817`, increment slot pointer by `0x2C` at `0x1781B`; current descriptor is then initialized with `+0x28=0xFFFFD8F0`, `+0x0C/+0x0E=0xFC00`, zeroed phase fields, `+0x06=0x0080`, and transitions 12→13 at `0x1784B`. State `0x18` table target `0x1818E` similarly initializes 16 slots at current base+`0x6E0` (40×`0x2C`) to state/substate zero (`0x181B2/0x181B6`, step `0x2C` at `0x181BA`), then sets current `+0x28=0x07D0`, `+0x24=0x0190`, `+0x22=0x001A`, zeroes phase fields, and transitions 18→19 at `0x181DE`. These are confirmed slot initializations; which slots become active and their visuals is separate.
-- Stage4 state chain: table state `0x1A→0x185AA` initializes current descriptor `+0x28=0xFFFFD8F0`, `+0x0C/+0x0E=0xFC00`, zeroes `+0x1A/+0x1C/+0x1E`, then writes state `0x1B` at `0x185D6`. State `0x1B` (`0x185E1`) increments current `+0x12`; exactly `0x3C` triggers state `0x1C` and resets `+0x12` (`0x185F5–0x185FE`). State `0x1C` (`0x186FB`) runs an ESI 0..7 helper loop (`0x18731/0x1877A`), then on completion writes current state `0x02` at `0x18783`; no allocator-pointer change is observed in this loop.- 스테이지 5 상태표의 상태 `0x3A/0x3B/0x3C/0x3D/0x43` 구간에는 각각 `0x22A78`, `0x22C98`, `0x22E72`, `0x2309A`, `0x2386B`의 register 기반 `+0x0A` store가 있다. source register/lookup base의 역추적은 진행 중이다.
+- Stage4 state chain: table state `0x1A→0x185AA` initializes current descriptor `+0x28=0xFFFFD8F0`, `+0x0C/+0x0E=0xFC00`, zeroes `+0x1A/+0x1C/+0x1E`, then writes state `0x1B` at `0x185D6`. State `0x1B` (`0x185E1`) increments current `+0x12`; exactly `0x3C` triggers state `0x1C` and resets `+0x12` (`0x185F5–0x185FE`). State `0x1C` (`0x186FB`) runs an ESI 0..7 helper loop (`0x18731/0x1877A`), then on completion writes current state `0x02` at `0x18783`; no allocator-pointer change is observed in this loop.
+- 스테이지 5 상태표의 상태 `0x3A/0x3B/0x3C/0x3D/0x43` 구간에는 각각 `0x22A78`, `0x22C98`, `0x22E72`, `0x2309A`, `0x2386B`의 register 기반 `+0x0A` store가 있다. source register/lookup base는 미확정이다.
 
 ### ENE 공통 형식과 구역 1 이벤트 스트림
 
-각 ENE 파일은 16,000 bytes다. 아래는 구역 1 처리기에서 확인한 ENE 공통 형식과 그 구역의 구체적 처리다. 전체 게임에서 이벤트 값의 뜻과 점프표가 같지는 않다. 구역별 처리기는 자체 디스패치 표를 가진다. 그 차이는 다음 절의 비교표에 따로 기록한다.
+각 ENE 파일은 16,000 bytes다. 아래는 구역 1 처리기에서 확인한 ENE 공통 형식과 그 구역의 구체적 처리다. 전체 게임에서 이벤트 값의 뜻과 점프표가 같지는 않다. 구역별 처리기는 자체 디스패치 표를 가진다. 그 차이는 앞의 스테이지별 ENE 디스패처 비교표에 기록한다.
 
 구역 1 처리 코드의 0x1097 루프는 EDI=0..15 를 돌며 0x8EEE8 이 가리키는 byte를 하나씩 소비한다. 값 0 은 객체 초기화/표시 분기를 건너뛰고 스트림 포인터를 한 칸 진행한다. 1–25 는 값−1 을 0x10C4 의 25-entry 점프표에 넣는다. 점프표의 20 번째 항목(ENE 값 20)은 현재 디스크립터의 공통 표시 경로 0x1DAA이며, 21–25 는 고정 객체 슬롯을 초기화하는 별도 처리기다. 25 보다 큰 값은 공통 표시 경로 0x1DAA로 간다. 한 번의 입력 배치에서 최대 16 bytes를 처리하지만, 처리 시점은 `0x8EEEC`의 하위 4 비트 게이트로 제한되므로 이를 매 프레임의 단일 이벤트라고 단정하지 않는다.
 
@@ -1415,7 +1410,7 @@ ENE 처리기가 디스크립터 `+0x10`에 넣는 초기 상태를 객체 갱�
 
 여기서 확인된 한 객체 처리의 단계 연결은 다음과 같다. ENE 값 21 은 디스크립터 고정 슬롯 0 에 상태 `0x1D`를 설정한다. 상태 `0x1D` 처리기 `0x345B`의 특정 보조 카운터가 `0x98`에 이르면 분기 `0x36F4`가 현재 객체의 x좌표를 6 비트 이동해 검사한다. 결과가 `0x60`이면 현재 객체 상태를 `0x29`로 바꾸고 `+0x12`, `+0x1A`를 0 으로 초기화한다. 상태 `0x29` 처리기 `0x3EBD`는 매 호출마다 `+0x12`를 증가시키며, 그 값이 `0x1388`(5000)이면 상태를 `0x32`로 바꾼다. 이는 5000 번의 객체 처리기 호출 조건이지 5000 화면 프레임이라고 환산한 값은 아니다.
 
-상태 `0x32` 처리기 `0x4264`는 `0x8EE94=0xC8`을 설정하고 81 개 디스크립터 범위를 순회해 상태 `0x04`인 객체를 비활성화한다. 이어 현재 디스크립터의 상태를 `0x33`으로 바꾸고 애니메이션/좌표 필드를 초기화한다. 상태 `0x33` 처리기 `0x432B`는 패턴과 속성을 갱신하고, 종료 카운터가 0x40 경계에 도달하면 현재 객체를 비활성화하고 `0x8EE8C`를 증가시킨다. 따라서 이 경로에서 `0x45FE`의 selector 증가는 ENE 값 21 의 객체 진행과 연결될 수 있는 코드상 결과다. 이 코드의 객체를 특정 적·보스·장면 이름으로 부르지는 않는다. 같은 상태값이 다른 생성 경로에서 쓰이는지와 실제 PAT 도형의 대응을 계속 대조한다.
+상태 `0x32` 처리기 `0x4264`는 `0x8EE94=0xC8`을 설정하고 81 개 디스크립터 범위를 순회해 상태 `0x04`인 객체를 비활성화한다. 이어 현재 디스크립터의 상태를 `0x33`으로 바꾸고 애니메이션/좌표 필드를 초기화한다. 상태 `0x33` 처리기 `0x432B`는 패턴과 속성을 갱신하고, 종료 카운터가 0x40 경계에 도달하면 현재 객체를 비활성화하고 `0x8EE8C`를 증가시킨다. 따라서 이 경로에서 `0x45FE`의 selector 증가는 ENE 값 21 의 객체 진행과 연결될 수 있는 코드상 결과다. 이 코드의 객체를 특정 적·보스·장면 이름으로 부르지는 않는다. 같은 상태값의 다른 생성 경로 사용 여부와 실제 PAT 도형의 대응은 미확정이다.
 
 추가로 점프표 상태 안에서 직접 확인된 재할당은 다음과 같다.
 
@@ -1442,7 +1437,7 @@ ENE 처리기가 디스크립터 `+0x10`에 넣는 초기 상태를 객체 갱�
 
 런타임 객체 디스크립터는 44-byte(0x2C) 단위다. 초기화 0x2A944 는 0x8EF3C부터 정확히 324 개(0x144 개)를 순회한다. 배열 범위는 [0x8EF3C, 0x926EC)이며 324×44=14,256 bytes다. 이 배열 바로 다음의 DWORD 저장소 `0x926EC`에는 초기화 시 끝 주소 값이 들어간다. 각 항목에서 +0,+2,+4,+6,+0x14 를 0 으로, +0x16/+0x18 을 1 로, +8 을 0x100, +0x0A를 128 로 초기화하고, 나머지 확인된 필드도 0 으로 지운다. 초기화 중 각 항목에 1×1 위치/속성 호출을 하며 AH=05h raw attribute 값은 1023 부터 항목마다 감소.
 
-`[0x926EC]`는 항상 풀 끝 커서인 고정 전역값이 아니라 여러 루틴이 다른 용도로 재사용하는 DWORD다. 초기화 함수 `0x2A944`는 이를 `0x8EF3C`로 설정하고 324 개 descriptor마다 `+0x2C`해 마지막에 배열 끝 `0x926EC`에 도달한다. 별도 32-slot 풀 생성기 `0x26F60`은 실제 free-slot 선택을 `[0x3F710]` 사용수, `[0x3F712]` 원형 인덱스, `[0x3F714]` 슬롯 표로 하고 선택 결과 descriptor 포인터를 `[0x926EC]`에 임시 보관한다. 이때 `[0x926EC]`는 free-slot counter가 아니다. updater `0x270FC`는 `0x91AB8`로 재설정한 뒤 32 개 slot을 순회하고, GAME OVER cleanup도 같은 base를 scan cursor로 쓴다. 플레이어 갱신 `0x2F0CC`와 continue 초기화 `0x277F4`에서는 이를 현재 플레이어 descriptor 포인터로 사용한다. 플레이어 번호 p=0/1 에서 가리키는 값은 각각 `0x91908`/`0x91858`이며, 이후 `0x2F1B1`, `0x2F40C`, `0x2F44B` 등은 그 descriptor를 접근한다. 따라서 이 전역의 의미는 그 값을 세팅하는 함수와 호출 문맥으로 구분한다. 기본 객체 기준 주소 0x90148 은 전체 배열 기준 108 번째 항목이고, 0x91AB8 은 160 번째 항목이다. 이 별도 32-slot 풀의 `0x26F60` 생성, `0x270FC` 갱신, `0x3BA+slot` register 및 `ALLTY_2.PAT` 패턴 시퀀스는 아래 절에서 연결한다. 구체적인 화면상 객체 종류와 각 호출자의 발생 조건은 아직 미확정이다.
+`[0x926EC]`는 항상 풀 끝 커서인 고정 전역값이 아니라 여러 루틴이 다른 용도로 재사용하는 DWORD다. 초기화 함수 `0x2A944`는 이를 `0x8EF3C`로 설정하고 324 개 descriptor마다 `+0x2C`해 마지막에 배열 끝 `0x926EC`에 도달한다. 별도 32-slot 풀 생성기 `0x26F60`은 실제 free-slot 선택을 `[0x3F710]` 사용수, `[0x3F712]` 원형 인덱스, `[0x3F714]` 슬롯 표로 하고 선택 결과 descriptor 포인터를 `[0x926EC]`에 임시 보관한다. 이때 `[0x926EC]`는 free-slot counter가 아니다. updater `0x270FC`는 `0x91AB8`로 재설정한 뒤 32 개 slot을 순회하고, GAME OVER cleanup도 같은 base를 scan cursor로 쓴다. 플레이어 갱신 `0x2F0CC`와 continue 초기화 `0x277F4`에서는 이를 현재 플레이어 descriptor 포인터로 사용한다. 플레이어 번호 p=0/1 에서 가리키는 값은 각각 `0x91A08`/`0x91958`이며, 이후 `0x2F1B1`, `0x2F40C`, `0x2F44B` 등은 그 descriptor를 접근한다. 따라서 이 전역의 의미는 그 값을 세팅하는 함수와 호출 문맥으로 구분한다. 기본 객체 기준 주소 0x90148 은 전체 배열 기준 108 번째 항목이고, 0x91AB8 은 160 번째 항목이다. 이 별도 32-slot 풀의 `0x26F60` 생성, `0x270FC` 갱신, `0x3BA+slot` register 및 `ALLTY_2.PAT` 패턴 시퀀스는 아래 절에서 연결한다. 구체적인 화면상 객체 종류와 각 호출자의 발생 조건은 아직 미확정이다.
 
 객체 갱신의 구역별 공통 꼬리는 현재 상태 코드가 부호 있는 16-bit 값 기준으로 `0x0A–0xC7` 범위, 정확히 `0x04`, 또는 `0x12C`보다 클 때 충돌 보조 함수 `0x27F04`를 호출한다. 구역 1의 꼬리는 `0x486F`; 같은 비교 형태가 구역 2 `0xA3E9`, 구역 3 `0x12BC8`, 구역 4 `0x1C03D`, 구역 5 `0x24B28`, 최종부 `0x26C1A`에 있다. 함수는 현재 디스크립터의 좌표 `+0/+2`, 폭·높이 `+0x16/+0x18`, 경계 오프셋 `+0x0C/+0x0E`로 사각 경계를 만들고, 플레이어 관련 디스크립터 주소 `0x91A08` 및 `0x91958`의 좌표·경계와 겹치는지 비교한다. 겹치면 충돌 관리 레코드 영역 `0x94368`/`0x94388`의 필드를 갱신하고, 상황별 효과음 호출을 한다. 상태 `0x04`에는 별도 2항목 충돌 검사 분기가 있다. 이 조건은 세 비교와 분기(`<=9`, `<0xC8`, `>0x12C`, `==4`)에서 직접 복원했다. 상태 처리기의 좌표/패턴 갱신과 공통 충돌 판정은 서로 다른 호출 단계다. 관리 레코드 `R[p]`의 `+0` 잔기, `+2` 충돌/상태 자원 카운터, `+4` 상태, `+6` phase/call counter, `+0x10` 점수, `+0x14/+0x18` 점수 갱신 제어값/타이머는 위 플레이어 필드 표에 정리했다. 관리 레코드의 `R+2`가 게임 규칙상 무엇을 세는지와 `R+0x08/R+0x0E/R+0x1C`의 용도는 미확정이며, 확인한 충돌 코드에서 별도 무적 플래그는 발견하지 못했다.
 
@@ -1500,7 +1495,7 @@ mode 2 경로는 x/y 좌표를 `[-0x400, 0x3C00]` 범위와 비교해 밖으로 
 
 ### 추출 및 정리 방법
 
-- EGB 문자열은 실행 파일의 6-byte x/y/byte_length 머리글과 40-byte Shift-JIS/CP932 텍스트 필드를 찾아 추출했다. 표의 오프셋은 ALLTYNEX.EXP 시작 기준 16 진수이며, 좌표도 함께 적었다.
+- EGB 문자열은 실행 파일의 6-byte x/y/byte_length 머리글과 80-byte 문자열 저장 영역을 기준으로 추출했다. 원본의 len은 40바이트다. 표의 오프셋은 ALLTYNEX.EXP 시작 기준 16 진수이며, 좌표도 함께 적었다.
 - 이 표의 `EXP:file+0x…` 좌표는 압축 P3 파일의 raw 바이트 오프셋이다. 압축 해제된 실행 이미지 주소와 직접 비교하지 않는다. 예: 타이틀 raw 파일 `0x3F32E`는 런타임 이미지 `0x3F1FC`에, EGB 날짜 raw 파일 `0x3E910`은 런타임 이미지 `0x3E700`에 대응한다.
 - 전각 라틴 문자/숫자와 전각 공백은 읽기 편하게 반각 문자/공백으로 바꿨다. 필드의 NUL 패딩과 양끝 공백은 제거했다. 일본어 문장 자체는 번역하거나 고쳐 쓰지 않았다. 이 절의 표는 초기 추출의 열람용 정규화 결과다. 실제 번역 CSV의 일본 원문은 선행 전각공백을 보존하므로, 이 표에서 trim된 문구를 CSV 원문 바이트 그대로라고 취급하지 않는다.
 - ASCII UI 문자열에서 게임의 @ 공백 표시는 공백으로 표시했다. 원래 철자와 대소문자(예: NOMAL, HARF)는 영문 패치 파일 그대로 보존했다. ASCII 문자열은 0x3F342 까지 확인해 변경 구간 뒤의 타이틀 문자열도 포함했다.
@@ -1672,7 +1667,6 @@ mode 2 경로는 x/y 좌표를 `[-0x400, 0x3C00]` 범위와 비교해 밖으로 
 ## 분석 한계와 남은 쟁점
 
 - EGB 래퍼 직접 CALL은 원본 EXP 재대조에서 58개(엔딩 12·스탭롤 1·오프닝 45)로 확인했다. 이전 57개 기록은 집계 오류로 정정했다.
-- ENE3 생성 표의 상태 필드 `+0x1A` 표기와 공용 규약 `+0x10` 표기가 다르다. 수치·주소는 보존하며 해당 표기를 새 정적 확인 없이 확정하지 않는다.
 - 각 함수의 완전한 의미 호출 그래프, 스테이지 내부 모든 완료조건과 모든 ENE/상태의 실제 화면상 이름은 복원하지 않았다. raw attribute 전체의 하드웨어 비트 형식·PAT fetch·색상표 적용 도형도 타이틀P 단일 사례를 모든 객체로 확대하지 않는다.
 - CFGDAT byte5, 레코드 `+0x11/+0x16`의 게임 규칙상 의미, 추가28행의 출처·선택 조건, 비정상 헤더의 clamp/reject는 미확정이다. 첫100행의 난이도5×반격탄2 그룹은 확인했다. QUIT GAME은 정리 후 옵션 반환까지 연결되지만 README의DOS 종료 설명과 맞는 최종 종료 경로는 찾지 못했다.
 - 플레이어 `R+2`의 게임상 이름, `R+0x08/+0x0E/+0x1C` 의미 및 별도 무적 플래그는 미확정이다. 점수 타이머를 무적 타이머로 부르지 않는다.
