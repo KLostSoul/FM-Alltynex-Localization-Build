@@ -23,7 +23,7 @@ python tools/build_alltynex_korean_freeos_from_zip.py
 
 `Output`에 `Alltynex (Kor v1.0).iso`와 `Alltynex (Kor v1.0).xdelta`가 함께 생성됩니다. xdelta의 기준 파일은 압축을 풀지 않은 원본 `alltynex_fmtowns.zip`입니다.
 
-Windows x64에서는 `tools/xdelta3.exe`에 포함된 [공식 xdelta3](https://github.com/jmacd/xdelta) v3.2.1을 사용합니다. 빌드 중 다운로드는 하지 않습니다. 다른 환경에서는 xdelta3를 PATH에 설치하거나 `--xdelta3`로 실행 파일 경로를 지정합니다.
+Windows x64에서는 `tools/xdelta3.exe`에 포함된 [공식 xdelta3](https://github.com/jmacd/xdelta) v3.2.1을 사용합니다. 다른 환경에서는 xdelta3를 PATH에 설치하거나 `--xdelta3`로 실행 파일 경로를 지정합니다.
 
 ## xdelta로 ISO 생성하기
 

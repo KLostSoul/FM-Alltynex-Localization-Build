@@ -18,7 +18,7 @@ python tools\build_alltynex_korean_freeos_from_zip.py
 
 부팅 OS 입력은 `Import/Img/CDIMG.ISO`다. 라이선스는 [안내](../licenses/THIRD-PARTY-NOTICES.md)를 참조한다. 통합 문서는 [한글 빌드](../doc/Alltynex-Korean-Build.md)에 있다.
 
-Windows x64에서는 `tools/xdelta3.exe`를 사용한다. `--xdelta3 PATH`로 다른 실행 파일을 직접 지정할 수 있으며 다른 환경에서는 PATH에 설치된 xdelta3를 찾는다. 빌드 중 자동 다운로드는 하지 않는다. xdelta 생성이 실패하면 전체 빌드도 실패로 표시한다.
+Windows x64에서는 `tools/xdelta3.exe`를 사용한다. `--xdelta3 PATH`로 다른 실행 파일을 직접 지정할 수 있으며 다른 환경에서는 PATH에 설치된 xdelta3를 찾는다. xdelta 생성이 실패하면 전체 빌드도 실패로 표시한다.
 
 ISO와 xdelta를 임시 경로에서 모두 생성한 뒤 결과 파일을 교체한다. 생성 실패 시 기존 결과를 보존하며, 교체 중 오류가 나면 이미 교체한 파일을 이전 결과로 복구한다.
 
