@@ -2,6 +2,8 @@
 
 FM TOWNS용 Alltynex의 한글 패치 ISO를 만드는 프로젝트입니다. 번역 CSV와 HANME 조합형 폰트를 사용해 본문을 한글로 출력하며, 생성 ISO는 FreeTOWNSOS로 부팅한 뒤 게임을 자동 실행합니다.
 
+![Alltynex Korean patch title screen](Images/title.PNG)
+
 ## 시작하기
 
 원본 Alltynex는 개발자가 [SITER SKAIN 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공하고 있습니다. **ALLTYNEX for FM TOWNS** 링크에서 받을 수 있습니다.
