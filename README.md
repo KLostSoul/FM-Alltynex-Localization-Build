@@ -4,6 +4,12 @@ FM TOWNS용 Alltynex의 한글 패치 ISO를 만드는 프로젝트입니다. �
 
 ![Alltynex Korean patch title screen](Images/title.PNG)
 
+## 실행 권장 환경
+
+- **CPU:** 486급 FM TOWNS를 권장합니다.
+- **메모리:** 4 MB 설정에서 한글 빌드의 엔딩까지 진행을 확인했습니다.
+- **실행 확인 환경:** Tsugaru의 HG(386DX-20), 20 MHz, RAM 4 MB에서 FreeTOWNSOS 한글 ISO를 실행했습니다. 386급에서는 486 권장 환경과 같은 속도를 보장하지 않습니다.
+
 ## 시작하기
 
 원본 Alltynex는 개발자가 [SITER SKAIN 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공하고 있습니다. **ALLTYNEX for FM TOWNS** 링크에서 받을 수 있습니다.
