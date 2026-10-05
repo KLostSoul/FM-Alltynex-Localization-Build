@@ -1,6 +1,6 @@
 # Alltynex 소스 분석
 
-- 분석 대상: 일본 원판 게임 파일, 영문 패치 EXP, 초기 FreeTOWNSOS 변환 ISO, 로컬 FreeTOWNSOS BIOS/Free386 소스.
+- 분석 대상: 일본 원판 게임 파일, [영문 패치](https://github.com/DerekPascarella/Alltynex-EnglishPatchFMTowns) EXP, 초기 FreeTOWNSOS 변환 ISO, 로컬 FreeTOWNSOS BIOS/Free386 소스.
 - 근거 범위: 파일 정적 분석과 사용자가 제공한 Tsugaru 디버거 관찰. 게임 실행 테스트는 사용자가 수행했다.
 - 주소: 별도 표기가 없으면 P3를 해제한 **runtime 이미지 오프셋**이다. `raw EXP`는 압축 파일 바이트 오프셋이다. 두 주소 공간은 위치별 P3 literal 매핑으로 연결하며 상수 차이를 전체 파일에 적용하지 않는다.
 
