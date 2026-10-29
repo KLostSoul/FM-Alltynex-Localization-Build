@@ -17,7 +17,7 @@
 
 원본 Alltynex는 개발자가 [SITER SKAIN의 배포 페이지](https://www.siterskain.com/artifact/)에서 무료로 제공한다. **ALLTYNEX for FM TOWNS** 링크로 받은 뒤 `Import/Img`에 둔다.
 
-현재 빌드는 Python 3.14로 빌드했다. 프로젝트 루트에서 작업한다.
+개발 환경은 Windows x64, Python 3.14.9 (64-bit), xdelta3 v3.2.1이다. Windows x64용 xdelta3는 `tools/xdelta3.exe`에 포함되어 있다. Python 빌드 도구는 표준 라이브러리만 사용하며 Pillow는 필요하지 않다. 프로젝트 루트에서 작업한다.
 
 | 위치 | 준비할 자료 |
 | --- | --- |
